@@ -118,7 +118,7 @@ class Bddsyages{
         return $req-> fetch(PDO:: FETCH_ASSOC);
     }
 	public function user_promo($idpromo){
-        $req= $this->bd->prepare( 'SELECT idUser from users where promo= :id and Drapeau = 0');
+        $req= $this->bd->prepare( 'SELECT idUser, Nom from users where promo= :id and Drapeau = 0 ORDER BY nom ASC');
         $req->bindValue(':id', $idpromo);
         $req->execute();
         return $req-> fetchALL(PDO:: FETCH_ASSOC);
@@ -187,12 +187,7 @@ class Bddsyages{
         $req->execute();
         return $req-> fetch(PDO:: FETCH_ASSOC);
     }
-	public function les_derniers_eval_du_prof($idProf){
-        $requete = $this->bd->prepare("SELECT * FROM eval where idUser=:idProf and Drapeau = 0 ORDER BY Date LIMIT 10");
-        $requete->bindValue(':idProf',$idProf);
-		$requete->execute();
-        return $requete->fetchAll(PDO::FETCH_ASSOC);
-    }
+	
 	public function creer_eval_deau($eleves, $idpromo, $idProf, $coef, $numEval){
 		// $eleves= $this->bd->prepare( 'SELECT iduser from users where promo= :idpromo');
         // $eleves->bindValue(':idpromo', $idpromo);
@@ -253,6 +248,29 @@ class Bddsyages{
 		$req->bindValue(':id', $id);
 		$req->execute();
 		return $req-> fetchALL(PDO:: FETCH_ASSOC);
+    }
+    public function les_derniers_eval_du_prof($idPromo, $idMatieres){
+        $rq="SELECT distinct idMatiere, idPromo, Coef, Date, Mode FROM eval where idpromo = :idpromo and idMatiere in ( _idMatieres ) and Drapeau = 0 ORDER BY Date limit 10";
+        $rq = str_replace("_idMatieres",$idMatieres,$rq);
+        $req = $this->bd->prepare($rq);
+        $req->bindValue(':idpromo', $idPromo);
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function creer_eval($promo_users, $matiere, $date, $coeff, $eval){
+        foreach($promo_users as $etudiant){
+            $req = $this->bd->prepare(
+            "INSERT INTO eval (idPromo, idUser, Date, Coef, Mode,NumEval,idMatiere,historique)
+                      VALUES (:idPromo, :idUser, :Date, :Coef, :mode, :NumEval,:idmatiere,'')");
+            $req->bindValue(':idPromo', $promo_users);
+            $req->bindValue(':idMatiere', $matiere);
+            $req->bindValue(':Date', $date);
+            $req->bindValue(':Coef', $coeff);
+            $req->bindValue(':Mode', $eval);
+            $req->bindValue(':Mode', $eval);
+            $req->bindValue(':Mode', $eval);
+            $req->execute();
+        }
     }
 }
 ?>

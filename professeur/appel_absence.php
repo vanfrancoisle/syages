@@ -72,11 +72,11 @@ $lesusers = $m->user_promo(120211);
 </form>
 <br/>
 <div id="btn_eval_abs">
-	
-	
+
 	<form action="gestion_controle">
 		<button class="btn_submit" type="submit">Annuler</button>
 	</form>
+
 </div>
 <br/><br/><br/>
 <br/><br/><br/>
