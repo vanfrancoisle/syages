@@ -63,7 +63,7 @@ class Bddsyages{
 
 
 
-//Admin Promotion
+//Admin Promotion Van-François 
     public function lespromoActuelles(){
         $req = $this->bd->prepare("SELECT * from promotion where DATEDIFF(dateFin,CURRENT_DATE())<365 and drapeau=0");
         $req->execute();
