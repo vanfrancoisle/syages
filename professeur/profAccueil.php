@@ -1,7 +1,50 @@
 <?php
 require "../general/debut.html";
 require "../general/menu.html";
+
+require '../general/BDDsyages.php';
+$m = BDDsyages::getBddsyages(2);
+
 ?>
+<?php 
+  	$mat= $m-> pourcentage_UneMatiere("Mathématiques");
+  	$ph= $m-> pourcentage_UneMatiere("Physique");
+  	$to= $m-> pourcentage();
+	
+
+  	$i=0;
+  	foreach ($mat as $c => $v) {
+  		if( $v[0]>=10)
+ 			$i++;
+  	}
+  	if(count($mat)==0)
+  		$maths=0;
+  	else
+  		$maths= $i/count($mat);
+  
+  	$j=0;
+  	foreach ($ph as $c => $v) {
+  		if( $v[0]>=10)
+ 			$j++;
+  	}
+  	if (count($ph)==0)
+  		$phy= 0;
+  	else
+  		$phy= $j/count($ph);
+
+  	$k=0;
+  	foreach ($to as $c => $v) {
+  		if($v[0]>=10)
+ 			$k++;
+  	}
+  	if (count($to)==0)
+  		$total= 0;
+  	else
+  		$total= $k/count($to);
+  	
+
+
+    ?>
 <!-------------------------------------------CODE PAGE ACCUEIL PROF----------------------------------------------------------------->
  <!---------------------------Circle----------------------------------->
   <div>  
@@ -41,7 +84,7 @@ require "../general/menu.html";
       let options = {
         startAngle: -1.55,
         size: 150,
-        value: 0.75,
+        value: <?php echo $maths; ?>,
 
         fill: {gradient: [ '#673dda', '#42b0fa']}
       }
@@ -50,10 +93,10 @@ require "../general/menu.html";
         $(this).parent().find("span").text(String(stepValue.toFixed(2).substr(2)) + "%");
       });
       $(".2 .bar").circleProgress({
-        value: 0.65
+        value: <?php echo $phy; ?>,
       });
-      (".3 .bar").circleProgress({
-        value: 0.70
+      $(".3 .bar").circleProgress({
+        value: <?php echo $total; ?>,
       });
 
 </script>
