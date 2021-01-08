@@ -1,7 +1,7 @@
 <?php
 $title='Detail de l\'absence';
 require "../general/debut.php";
-echo '<link rel="stylesheet" type="text/css" href="/css/secretaire/style_absence2.css/">';  /*mettre le css qui vous est particulier pas le css general qui est deja défini dans le début.php*/
+echo '<link rel="stylesheet" type="text/css" href="../css/secretaire/style_absence2.css">';  /*mettre le css qui vous est particulier pas le css general qui est deja défini dans le début.php*/
 require "../general/debut-2.php";
 $h3='Menu secretaire';
 require "../general/navbanner-secretaire.php"; 
@@ -12,11 +12,11 @@ $m = Bddsyages::getBddsyages(2);
 ?> 
         <div class="body" id="body">
             <div class="melbanner">
-        <button id="btn-menu1" onclick="show_hide()"><img src="/img/menu.png" id="menu"></button>
-                <img src="/img/logo.png" id="logo"/>
-                <input type="text" placeholder="Entrez des mots-clés" id="searchbar"><input type="submit" value="Rechercher" id="submitbutton">
-                <img src="/img/david.jpg" id="user"/>
-            </div>
+	<button id="btn-menu1" onclick="show_hide()"><img src="../img/menu.png" id="menu"></button>
+    <img src="../img/logo.png" id="logo"/>
+    <input type="text" placeholder="Entrez des mots-clés" id="searchbar"><input type="submit" value="Rechercher" id="submitbutton">
+    <img src="../img/david.jpg" id="user"/>
+</div>
 
 
 <center><h1>Detail de l'absence </h1><br/></center>
