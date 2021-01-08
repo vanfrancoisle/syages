@@ -80,7 +80,7 @@
     margin: 2px;
     border:1px solid white;
     border-radius:2px;
-    background-color :#031858;
+    background-color: #031858;
 }
 .wrapper .body .tabeval .eval p #submit:hover{
     background-color: rgb(1, 238, 255);
@@ -92,7 +92,7 @@
     margin: 2px;
     border:1px solid white;
     border-radius:2px;
-    background-color :#031858;
+    background-color: #031858;
 }
 .wrapper .body .tabeval .eval p #button:hover{
     background-color: rgb(1, 238, 255);
