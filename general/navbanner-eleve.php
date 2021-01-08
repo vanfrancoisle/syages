@@ -5,6 +5,7 @@
             <ul>
                 <li><a href="#"><img src ="../img/home.ico"/>ACCUEIL</a></li>
                 <li><a href="#"><img src ="../img/grades.png"/>MES NOTES</a></li>
+                <li><a href="#"><img src ="../img/grades.png"/>MES ABSENCES</a></li>
                 <li><a href="#"><img src ="../img/graph.ico"/>GRAPHIQUES</a></li>
                 <li><a href="#"><img src ="../img/user.png"/>MES INFORMATIONS</a></li>
                 <li><a href="#"><img src ="../img/deconnexion.png"/>DECONNEXION</a></li>

@@ -64,14 +64,54 @@ class Bddsyages{
     	$req->bindValue(":id",$id);
     	$req->execute();
     }
+   
+    //// PAGE AYMANE
     public function absence_eleve($eleve){
-        $req= $this->bd->prepare( 'SELECT idAbs, Datetheure, Data from absenceretard where idUser= :id and Drapeau = 0');
-        $req->bindValue(':id', $eleve);
+          $req= $this->bd->prepare( 'SELECT iduser, idAbs, Datetheure, Data, Justif from absenceretard where idUser= :id and Drapeau = 0');
+          $req->bindValue(':id', $eleve);
+          $req->execute();
+          return $req-> fetchAll(PDO:: FETCH_ASSOC);
+      }
+
+      public function absence_admin(){
+        $req= $this->bd->prepare('SELECT u.Nom, u.Prénom, a.Datetheure, a.Justif, a.Data, a.Historique from  users u, absenceretard a where u.idUser = a.idUser and Drapeau = 0');
         $req->execute();
-        return $req-> fetch(PDO:: FETCH_ASSOC);
+        return $req-> fetchAll(PDO:: FETCH_ASSOC);
+
     }
 
-	public function nom_prenom_user($id){
+    public function get_absJustifTotal(){
+        $req = $this->bd->prepare("SELECT COUNT(*) FROM absenceretard  where absenceretard.Justif = 1 and Drapeau = 0 ");
+       
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_NUM)[0];    
+    }
+
+    public function get_absInjustifTotal(){
+        $req = $this->bd->prepare("SELECT COUNT(*) FROM absenceretard where absenceretard.Justif = 0 and Drapeau = 0 ");
+       
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_NUM)[0];
+    }
+
+    //Page prof accueil
+
+  
+    public function pourcentage_UneMatiere($nomMatiere){ //pourcentage de reussite par matiere
+        $req= $this->bd->prepare('SELECT mo.Note, mo.idMatiere, m.Nom FROM moyenne mo, matiere m where m.idMatiere=mo.idMatiere and m.Nom= :nom and mo.Drapeau = 0 ');
+        $req->bindValue(':nom', $nomMatiere);
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_NUM);
+    } 
+     public function pourcentage(){ //pourcentage de reussite total
+        $req= $this->bd->prepare('SELECT mo.Note, mo.idMatiere, m.Nom FROM moyenne mo, matiere m where m.idMatiere=mo.idMatiere and mo.Drapeau = 0 ');
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_NUM);
+    } 
+
+    ////
+	
+    public function nom_prenom_user($id){
         $req= $this->bd->prepare( 'SELECT Nom, Prénom from users where idUser= :id and Drapeau = 0');
         $req->bindValue(':id', $id);
         $req->execute();
