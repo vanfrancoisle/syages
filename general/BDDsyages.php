@@ -192,10 +192,10 @@ class Bddsyages{
     }
 
     public function id_promo_user($idUser){
-        $requeteMatiere = $this->bd->prepare("SELECT promo FROM users where idUser=:id and Drapeau = 0;");
-		$requeteMatiere->bindValue(":id",$idUser);
+        $requeteMatiere = $this->bd->prepare("SELECT promo FROM users where idUser=:iduser and Drapeau = 0;");
+		$requeteMatiere->bindValue(":iduser",$idUser);
 		$requeteMatiere->execute();
-        return $requeteMatiere->fetch(PDO::FETCH_ASSOC)["Nom"];
+        return $requeteMatiere->fetch(PDO::FETCH_ASSOC)["promo"];
     }
 	
 	public function nom_promo($idp){
