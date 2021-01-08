@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+
+
+/*!!!!!! Css pour le body !!!!!!!!!!!!!! */
+
+h1{
+  text-align: center;
+
+}
+
+
 .contgen {
   margin-top: 20px;
   display: grid;
@@ -13,10 +24,7 @@
   grid-row: 1;
 }
 
-.choixtrim{
-  grid-column: 3 / 3;
-  grid-row: 1;
-}
+
 
 .container {
     /* On ajoute une marge sur les cotés de l'écran */
@@ -26,11 +34,13 @@
     /* Et on centre */
     margin-right: auto;
     margin-left: auto;
+    margin-bottom: 23%;
 }
 select{
     color:black;
     border-radius: 10px;
 }
+
 option{
     color:black;
 }
@@ -41,7 +51,6 @@ option{
         width: 1170px;
     }
 }
-
 
 .wrapper .body .tababs{
     overflow: hidden;
@@ -58,10 +67,9 @@ option{
 #tab_abs{
     width:100%;
 }
-rapper .body .tababs table tr,td,th{
+.wrapper .body .tababs table tr,td,th{
   border : 2px solid white;
 }
-
 
 .wrapper .body .tababs table th {
     background-color:#A9A9A9;
@@ -69,13 +77,4 @@ rapper .body .tababs table tr,td,th{
 
 .wrapper .body .tababs table td,tr,th{padding:10px}
 
-.wrapper .body .tababs tab tr{
-    margin: auto;
-}
-.wrapper .body .tababs  .coule1{
-        background-color: green;
-}
-.wrapper .body .tababs  .coule2{
-        background-color: #8B0000;
-}
 
