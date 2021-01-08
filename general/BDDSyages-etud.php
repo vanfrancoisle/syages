@@ -110,6 +110,7 @@ class Bddsyages{
         $req->execute();
         return $req-> fetch(PDO:: FETCH_ASSOC)["nom"];
     }
+    
 }
 
 ?>

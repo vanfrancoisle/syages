@@ -11,16 +11,15 @@ require "../general/navbanner-professeur.php";
 require_once "../general/Bddsyages.php";
 
 $m = Bddsyages::getBddsyages(2);
-$idMatiere=1;
+$idMatiere=2;
 $idPromo=120211;
 $c=$m->recuperer_controle($idPromo, $idMatiere);
 $nbEval=$m->nb_eval_matiere_promo($idPromo, $idMatiere);
-
-
+//-----------------------------------
 if(isset($_POST['idMatiere']) and isset($_POST['promo']) and
 isset($_POST['date']) and
 isset($_POST['eval']) and
-isset($_POST['coeff'])){
+isset($_POST['coeff']){
 	$matiere=$_POST['idMatiere'];
 	$promo=$_POST['promo'];
 	$date=$_POST['date'];
@@ -28,7 +27,7 @@ isset($_POST['coeff'])){
 	$coeff=$_POST['coeff'];
 	$mk_ctrl = $m->creer_eval($promo, $matiere, $date, $coeff, $eval);
 }
-
+//-----------------------------------
 ?>
 <div class="body" id="body">
 <div class="melbanner">
@@ -53,25 +52,6 @@ isset($_POST['coeff'])){
 		<button class="btn_submit" type="submit">Faire l'appel</button>
 	</form>
 </div>
-<br/><br/><br/>
-	
-<?php
-	//$les_matieresProf="1,3";
-	//$ctrl= $m->les_derniers_eval_du_prof(120211,$les_matieresProf);
-	//var_dump(count($ctrl));
-	//var_dump($ctrl);
-	if(isset($_POST['promo'])){
-	$promo=$_POST['promo'];
-	var_dump($promo);
-}if(isset($_POST['idMatiere'])){
-	$matiere=$_POST['idMatiere'];
-	var_dump($matiere);
-}if(isset($_POST['date'])){
-	$date=$_POST['date'];
-	var_dump($date);
-}
-?>
-
 <br/><br/><br/>
 
 <div class="tababs">
@@ -112,7 +92,7 @@ isset($_POST['coeff'])){
 			$etudiant = $m->nom_prenom_user(intval($lingneUser["idUser"]));
 
 			//echo '<tr data-href="visualition_note_elve?id='.(intval($lingneUser["idUser"])).'"><td>'.($cle+1).'</td><td>'.$etudiant["Nom"].'</td><td>'.$etudiant["Prénom"].'</td>';
-			echo '<tr><td>'.($cle+1).'</td><td>'.$etudiant["Prénom"].'</td><td>'.$etudiant["Nom"].'</td>';
+			echo '<tr><td>'.($cle+1).'</td><td>'.$etudiant["Nom"].'</td><td>'.$etudiant["Prénom"].'</td>';
 			$nbCoef=0;
 			for($numEval=1; $numEval<=$nbEval;$numEval++){
 				$note=$controleEtu[$numEval-1]["Note"];
@@ -156,7 +136,7 @@ isset($_POST['coeff'])){
 			echo '<td class="moy_eval_bas">'.(bcdiv($tabMoyenneCtrl[$i],count($lesusers),2)).'</td>';
 		   }
 	   ?>
-	   <td class="moy_gen"><strong>  <?= bcdiv($moyenneClasse,count($lesusers),2)?></strong></td></tr>
+	   <td class="moy_gen"><strong>  <?= bcdiv($moyenneClasse,count($lesusers),2)?><''''''/strong></td></tr>
     </tfoot>
 	</table>
 <script type="text/javascript">

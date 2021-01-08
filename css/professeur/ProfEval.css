@@ -2,7 +2,6 @@
 .wrapper .body .tabeval{
     display: flex;
     overflow: hidden;
-    margin-left: 245px;
 }
 
 .wrapper .body .tabeval table td{
