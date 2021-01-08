@@ -60,7 +60,7 @@ class Bddsyages{
 		
     }
     public function fonction_test($idpromo){
-		
+		// Fait par kandji
     }
 }
 
