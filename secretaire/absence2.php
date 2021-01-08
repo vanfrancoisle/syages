@@ -22,9 +22,9 @@ $m = Bddsyages::getBddsyages(2);
 <center><h1>Detail de l'absence </h1><br/></center>
 <?php
 $eleve = 11111116;
-$nomPremonIdUser = $m->nom_prenom_user($eleve);
-
-
+$nomPrenomIdUser = $m->nom_prenom_user($eleve);
+$id_promo_user =$m->id_promo_user($eleve);
+$nomPromo = $m -> nom_promo($id_promo_user);
 
 // je fais ici avec lesabsdeId !!
 $nbabsj=0;
@@ -33,9 +33,9 @@ foreach($lesabsdeId as $abs){
 	if($abs['Justif']=="1") $nbabsj++;
 }
 //var_dump($nomPromeIdUser);// pas correct !!
-echo '<p> Prénom : '.$nomPremonIdUser["Prénom"]; 
-echo '<p> Nom : '.$nomPremonIdUser["Nom"];
-echo '<p> Promo : '.$nomPromeIdUser;
+echo '<p> Prénom : '.$nomPrenomIdUser["Prénom"]; 
+echo '<p> Nom : '.$nomPrenomIdUser["Nom"];
+echo '<p> Promo : '.$nomPromo;
 echo '<p> Nombre d\'absence total : '.count($lesabsdeId);
 echo '<p> Nombre d\'absence Justifiée : '.$nbabsj;
 ?>

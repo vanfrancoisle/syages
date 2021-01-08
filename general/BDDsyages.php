@@ -607,9 +607,6 @@ class Bddsyages{
         return $req->fetchAll(PDO::FETCH_NUM)[0];
     }
 }
-<<<<<<< HEAD
+
 ?>
 
-=======
-?>
->>>>>>> 113176ed0b35aeafdcfccaf3e6686c53d571e4a0
