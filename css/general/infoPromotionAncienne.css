@@ -5,8 +5,9 @@ body, .body, .wrapper{
     width:100%;
 }
 
-a{
+.contenu a{
     color : #3B59CA;
+    font-weight: bold;
 }
 .tab {
     width:100%;
@@ -26,4 +27,10 @@ h3{
 }
 .titre_annee{
     border-collapse : collapse;
+}
+.tab table{
+    width: 95%;
+}
+.tab table td{
+    padding:0.2em;
 }

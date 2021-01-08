@@ -107,7 +107,6 @@ $m = BDDsyages::getBddsyages(2);
 		<table class="styled-table">
 		<thead>
 			<tr class="active_row">
-				<th>ID</th>
 				<th>Matière(s) enseignée(s)</th>
 				<th>Date De Naissance</th>
 				<th>E-mail</th>
@@ -116,7 +115,6 @@ $m = BDDsyages::getBddsyages(2);
 		</thead>
 		<tbody>
 			<tr class="row">
-				<td>11909708</td>
 				<td>Mathématiques & Physique</td>
 				<td>10/01/1947</td>
 				<td>realgangsta@shutup.com</td>

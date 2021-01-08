@@ -5,8 +5,9 @@ body, .body, .wrapper{
     width:100%;
 }
 
-a{
+.contenu a{
     color : #3B59CA;
+    font-weight: bold;
 }
 .tab {
     width:100%;
@@ -23,12 +24,14 @@ a{
 }
 h3{
     padding:1em 0em;
+    font-size:1em;
 }
 #wrapper2{
+    padding-top:1em;
     display:flex;
 }
 #container_wrapper2{
-    width:65%;
+    width:50%;
 }
 #chart, #myChart{
     width:100%;
@@ -36,5 +39,24 @@ h3{
     margin-right:5em;
 }
 #chart{
-    margin-top:5%;
+    width:50%;
+}
+.tab table{
+    width: 95%;
+}
+.tab table td{
+    padding:0.2em;
+}
+
+h3 form{
+    display:inline;
+}
+
+
+.body #body .contenu h2 .form_inline{
+    display:inline;
+}
+
+h2{
+    font-size:1.3em;
 }
