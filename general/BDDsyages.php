@@ -263,12 +263,6 @@ class Bddsyages{
         }
     }
 
-
-
-
-
-
-
     //Admin Promotion Van-François 
     public function lespromoActuelles(){
         $req = $this->bd->prepare("SELECT * from promotion where DATEDIFF(dateFin,CURRENT_DATE())<365 and drapeau=0");
@@ -581,7 +575,6 @@ class Bddsyages{
     }
 
 
-
 // PROMOTION ANCIENNE
     public function lespromoAnciennes(){
         $req = $this->bd->prepare("SELECT idPromotion,nomPromo,datedebut,dateFin from promotion where DATEDIFF(dateFin,CURRENT_DATE())>365 and drapeau=0");
@@ -609,10 +602,6 @@ class Bddsyages{
         $req->execute();
         return $req->fetchAll(PDO::FETCH_NUM)[0];
     }
-
-    public function testPush($idPromotion){
-        /// Kandji
-    }
     public function get_moyennePromo($idPromotion){
         $req = $this->bd->prepare("SELECT avg(note) FROM moyenne inner join matiere on moyenne.idMatiere = matiere.idMatiere where matiere.idPromotion=:idPromotion and moyenne.drapeau=0");
         $req->bindValue(":idPromotion",$idPromotion);
@@ -621,4 +610,3 @@ class Bddsyages{
     }
 }
 ?>
->>>>>>> cee34de04d37fa356f6c380a17269bfe171bdf8d
