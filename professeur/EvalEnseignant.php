@@ -54,16 +54,6 @@ $m = Bddsyages::getBddsyages(2);
 					<?php
 						$les_matieresProf="1,4";
 						$ctrl= $m->les_derniers_eval_du_prof($idPromo,$les_matieresProf);
-						//var_dump($ctrl);
-                       /*foreach ($lesEval as $ligne){
-						$nomMatiere=$m->nom_matiere($ligne['idMatiere']);
-						
-                        $nomPromo=$m->nom_promo($ligne['idPromo']);
-                        echo '<tr><td>'. $nomMatiere. '</td><td>' . $nomPromo[0]['Option'].'</td><td>'.$ligne['Date'].'</td><td>'.$ligne['Coef'].'</td><td> '.$ligne['Mode'] .'</td></tr>';
-                        }*/
-                        /**foreach ($liste_eval as $ev){
-                            echo '<tr><td>' . $ev['idMatiere'] . '</td><td>' . $ev['idPromotion'] . '</td><td>' .  $ev['Coef'] . '</td><td>' .  $ev['Date'] . '</td><td>' .  $ev['Mode'] . '</td></tr>';
-						}**/
 						foreach	($ctrl as $ev){
 							$nomMatiere=$m->nom_matiere($ev['idMatiere']);
 							$nomPromo=$m->nom_promo($ev['idPromo']);
