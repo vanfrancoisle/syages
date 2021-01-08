@@ -181,30 +181,17 @@ class Bddsyages{
 		$lesM = explode('-',$req-> fetch(PDO:: FETCH_ASSOC)['inscriptionMatiere']);
         return $lesM;
     }
-	public function matiere_de($id){
-        $req= $this->bd->prepare( 'SELECT nom from matiere where idMatiere= :id and Drapeau = 0;');
-		$req->bindValue(':id', $id);
-        $req->execute();
-        return $req-> fetch(PDO:: FETCH_ASSOC);
-    }
-	
-	public function creer_eval_deau($eleves, $idpromo, $idProf, $coef, $numEval){
-		// $eleves= $this->bd->prepare( 'SELECT iduser from users where promo= :idpromo');
-        // $eleves->bindValue(':idpromo', $idpromo);
-        // $eleves->execute();
-		// while($ligne = $eleves->fetch(PDO::FETCH_ASSOC)) {
-			// var_dump($ligne);
-			// $req = $this->bd->prepare( "INSERT into eval(idPromo, idUser, Note, Date, Coef, Mode, Drapeau, modifie, historique, NumEval, idMatiere) VALUES(:idpromo, :idEtud, 15, '2021-01-10', 6, 'Exam Espagnol', 0, 0, '', 3, 6);");
-			// $req->bindValue(':idpromo', $idpromo);
-			// $req->bindValue(':idEtud', $ligne["iduser"]);
-			// $req->execute();
-				
-		// }
-    }
 	
 	public function nom_matiere($idm){
-        $requeteMatiere = $this->bd->prepare("SELECT `Nom` FROM matiere where idMatiere=:idm");
+        $requeteMatiere = $this->bd->prepare("SELECT `Nom` FROM matiere where idMatiere=:idm and Drapeau = 0;");
 		$requeteMatiere->bindValue(":idm",$idm);
+		$requeteMatiere->execute();
+        return $requeteMatiere->fetch(PDO::FETCH_ASSOC)["Nom"];
+    }
+
+    public function id_promo_user($idUser){
+        $requeteMatiere = $this->bd->prepare("SELECT promo FROM users where idUser=:id and Drapeau = 0;");
+		$requeteMatiere->bindValue(":id",$idUser);
 		$requeteMatiere->execute();
         return $requeteMatiere->fetch(PDO::FETCH_ASSOC)["Nom"];
     }
@@ -215,6 +202,7 @@ class Bddsyages{
 		$requetePromo->execute();
         return $requetePromo->fetch(PDO::FETCH_ASSOC)['Option'];
     }
+
 	public function les_absences(){
         $requeteAbs = $this->bd->prepare("SELECT * FROM absenceretard;");
 		$requeteAbs->execute();
