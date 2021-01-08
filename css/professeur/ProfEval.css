@@ -3,9 +3,22 @@
 .wrapper .body .tabeval{
     display: flex;
     overflow: hidden;
-    margin-left: 300px; 
+    margin-right: auto; 
+    margin-left: auto; 
 }
-
+#tab_fomulaire {
+    width: 85%;
+}
+form .btn_submit {
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    font-size: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: #031858;
+    cursor: pointer;
+}
 .wrapper .body .tabeval table td{
     text-align: center;
 }
@@ -38,7 +51,7 @@
 
 
 .wrapper .body .tabeval .eval{
-    margin-left: 70px;
+    margin-left: 5%;
     width: 16%;
     height: min-content;
     border: 1px solid white;

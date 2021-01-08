@@ -1,7 +1,7 @@
 <?php
 $title='Controles';
 require "../general/debut.php";
-echo '<link rel="stylesheet" type="text/css" href="../css/professeur/profEval.css">';
+echo '<link rel="stylesheet" type="text/css" href="../css/professeur/ProfEval.css">';
 echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';
 echo "<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>";
 require '../general/debut-2.php';
@@ -16,11 +16,11 @@ $m = Bddsyages::getBddsyages(2);
 ?>
 <div class="body" id="body">
 	<div class="melbanner">
-		<button id="btn-menu1" onclick="show_hide()"><img src="/img/menu.png" id="menu"></button>
-		<img src="/img/logo.png" id="logo"/>
+		<button id="btn-menu1" onclick="show_hide()"><img src="../img/menu.png" id="menu"></button>
+		<img src="../img/logo.png" id="logo"/>
 		<input type="text" placeholder="Entrez des mots-clés" id="searchbar"><input type="submit" value="Rechercher" id="submitbutton">
-		<img src="/img/david.jpg" id="user"/>
-	</div>
+		<img src="../img/david.jpg" id="user"/>
+    </div>
 	<?php
 		if(isset($_POST['promo']) and preg_match("#^[1-9]\d*$#",$_POST['promo']) 
 		and isset($_POST['idMatiere']) and preg_match("#^[1-9]\d*$#",$_POST['idMatiere'])
@@ -46,7 +46,7 @@ $m = Bddsyages::getBddsyages(2);
 		}
 	?>
         <h2><br/>ÉVALUATION </h2><br/>  
-        <div class="tabeval">
+        <div id="tab_fomulaire" class="tabeval">
             <div class="tab">
                 <table>
                 <tr><th>Matières</th><th>Promo concernée</th><th>Date</th><th>Coefficient</th><th>Type d'évaluation</th></tr>
