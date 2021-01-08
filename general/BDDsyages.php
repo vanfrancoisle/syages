@@ -257,18 +257,18 @@ class Bddsyages{
         $req->execute();
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function creer_eval($promo_users, $matiere, $date, $coeff, $eval){
+    public function creer_eval($idPromo,$promo_users, $Date, $Coef, $eval, $numEval,$idMatiere){
         foreach($promo_users as $etudiant){
             $req = $this->bd->prepare(
             "INSERT INTO eval (idPromo, idUser, Date, Coef, Mode,NumEval,idMatiere,historique)
-                      VALUES (:idPromo, :idUser, :Date, :Coef, :mode, :NumEval,:idmatiere,'')");
-            $req->bindValue(':idPromo', $promo_users);
-            $req->bindValue(':idMatiere', $matiere);
-            $req->bindValue(':Date', $date);
-            $req->bindValue(':Coef', $coeff);
+                      VALUES (:idPromo, :idUser, :Date, :Coef, :Mode, :NumEval,:idMatiere,'')");
+            $req->bindValue(':idPromo', $idPromo);
+            $req->bindValue(':idUser', $etudiant['idUser']);
+            $req->bindValue(':Date', $Date);
+            $req->bindValue(':Coef', $Coef);
             $req->bindValue(':Mode', $eval);
-            $req->bindValue(':Mode', $eval);
-            $req->bindValue(':Mode', $eval);
+            $req->bindValue(':NumEval', $numEval);
+            $req->bindValue(':idMatiere', $idMatiere);
             $req->execute();
         }
     }

@@ -11,23 +11,23 @@ require "../general/navbanner-professeur.php";
 require_once "../general/Bddsyages.php";
 
 $m = Bddsyages::getBddsyages(2);
-$idMatiere=1;
-$idPromo=120211;
+
+
+if(isset($_POST['promo']) and preg_match("#^[1-9]\d*$#",$_POST['promo']) 
+		and isset($_POST['idMatiere']) and preg_match("#^[1-9]\d*$#",$_POST['idMatiere'])){
+	$idPromo=$_POST['promo'];
+	$lesusers = $m->user_promo($idPromo);
+	$idMatiere=$_POST['idMatiere'];
+	//var_dump($idMatiere);
+}else{
+	$idMatiere=3;
+    $idPromo=120211;
+	$lesusers = $m->user_promo(120211);
+}
 $c=$m->recuperer_controle($idPromo, $idMatiere);
 $nbEval=$m->nb_eval_matiere_promo($idPromo, $idMatiere);
 
 
-if(isset($_POST['idMatiere']) and isset($_POST['promo']) and
-isset($_POST['date']) and
-isset($_POST['eval']) and
-isset($_POST['coeff'])){
-	$matiere=$_POST['idMatiere'];
-	$promo=$_POST['promo'];
-	$date=$_POST['date'];
-	$eval=$_POST['eval'];
-	$coeff=$_POST['coeff'];
-	$mk_ctrl = $m->creer_eval($promo, $matiere, $date, $coeff, $eval);
-}
 
 ?>
 <div class="body" id="body">
@@ -42,7 +42,7 @@ isset($_POST['coeff'])){
 <h2>Matière : <?= $m->nom_matiere($idMatiere)?></h2><br/>
 <h2>Semestre 1 </h2><br/>
 <div id="btn_eval_abs">
-	<form action="ProfEval" method="post">
+	<form action="EvalEnseignant" method="post">
 		<input name="idMatiere" type="hidden" value="<?=$idMatiere?>">
 		<input name="idPromo" type="hidden" value="<?=$idPromo?>">
 		<button class="btn_submit" type="submit">Creer une évaluation</button>
@@ -56,16 +56,12 @@ isset($_POST['coeff'])){
 <br/><br/><br/>
 	
 <?php
-	//$les_matieresProf="1,3";
-	//$ctrl= $m->les_derniers_eval_du_prof(120211,$les_matieresProf);
-	//var_dump(count($ctrl));
-	//var_dump($ctrl);
 	if(isset($_POST['promo'])){
 	$promo=$_POST['promo'];
-	var_dump($promo);
+	//var_dump($promo);
 }if(isset($_POST['idMatiere'])){
 	$matiere=$_POST['idMatiere'];
-	var_dump($matiere);
+	//var_dump($matiere);
 }if(isset($_POST['date'])){
 	$date=$_POST['date'];
 	var_dump($date);
@@ -97,8 +93,7 @@ isset($_POST['coeff'])){
 		</thead>
 		<tbody>';
 		// Remplissage du tableau pour chaque etudiants et le nombre de controle qu'il a fait
-		$lesusers = $m->user_promo(120211);
-		//var_dump(count($lesusers));
+		
 		$i=0;
 		$moyenneClasse=0;
 		$tabMoyenneCtrl=[];
