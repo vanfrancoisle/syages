@@ -181,32 +181,19 @@ class Bddsyages{
 		$lesM = explode('-',$req-> fetch(PDO:: FETCH_ASSOC)['inscriptionMatiere']);
         return $lesM;
     }
-	public function matiere_de($id){
-        $req= $this->bd->prepare( 'SELECT nom from matiere where idMatiere= :id and Drapeau = 0;');
-		$req->bindValue(':id', $id);
-        $req->execute();
-        return $req-> fetch(PDO:: FETCH_ASSOC);
-    }
-	
-	public function creer_eval_deau($eleves, $idpromo, $idProf, $coef, $numEval){
-		// $eleves= $this->bd->prepare( 'SELECT iduser from users where promo= :idpromo');
-        // $eleves->bindValue(':idpromo', $idpromo);
-        // $eleves->execute();
-		// while($ligne = $eleves->fetch(PDO::FETCH_ASSOC)) {
-			// var_dump($ligne);
-			// $req = $this->bd->prepare( "INSERT into eval(idPromo, idUser, Note, Date, Coef, Mode, Drapeau, modifie, historique, NumEval, idMatiere) VALUES(:idpromo, :idEtud, 15, '2021-01-10', 6, 'Exam Espagnol', 0, 0, '', 3, 6);");
-			// $req->bindValue(':idpromo', $idpromo);
-			// $req->bindValue(':idEtud', $ligne["iduser"]);
-			// $req->execute();
-				
-		// }
-    }
 	
 	public function nom_matiere($idm){
-        $requeteMatiere = $this->bd->prepare("SELECT `Nom` FROM matiere where idMatiere=:idm");
+        $requeteMatiere = $this->bd->prepare("SELECT `Nom` FROM matiere where idMatiere=:idm and Drapeau = 0;");
 		$requeteMatiere->bindValue(":idm",$idm);
 		$requeteMatiere->execute();
         return $requeteMatiere->fetch(PDO::FETCH_ASSOC)["Nom"];
+    }
+
+    public function id_promo_user($idUser){
+        $requeteMatiere = $this->bd->prepare("SELECT promo FROM users where idUser=:iduser and Drapeau = 0;");
+		$requeteMatiere->bindValue(":iduser",$idUser);
+		$requeteMatiere->execute();
+        return $requeteMatiere->fetch(PDO::FETCH_ASSOC)["promo"];
     }
 	
 	public function nom_promo($idp){
@@ -215,6 +202,7 @@ class Bddsyages{
 		$requetePromo->execute();
         return $requetePromo->fetch(PDO::FETCH_ASSOC)['Option'];
     }
+
 	public function les_absences(){
         $requeteAbs = $this->bd->prepare("SELECT * FROM absenceretard;");
 		$requeteAbs->execute();
@@ -272,12 +260,6 @@ class Bddsyages{
             $req->execute();
         }
     }
-
-
-
-
-
-
 
     //Admin Promotion Van-François 
     public function lespromoActuelles(){
@@ -591,7 +573,6 @@ class Bddsyages{
     }
 
 
-
 // PROMOTION ANCIENNE
     public function lespromoAnciennes(){
         $req = $this->bd->prepare("SELECT idPromotion,nomPromo,datedebut,dateFin from promotion where DATEDIFF(dateFin,CURRENT_DATE())>365 and drapeau=0");
@@ -619,10 +600,6 @@ class Bddsyages{
         $req->execute();
         return $req->fetchAll(PDO::FETCH_NUM)[0];
     }
-
-    public function testPush($idPromotion){
-        /// Kandji
-    }
     public function get_moyennePromo($idPromotion){
         $req = $this->bd->prepare("SELECT avg(note) FROM moyenne inner join matiere on moyenne.idMatiere = matiere.idMatiere where matiere.idPromotion=:idPromotion and moyenne.drapeau=0");
         $req->bindValue(":idPromotion",$idPromotion);
@@ -630,5 +607,9 @@ class Bddsyages{
         return $req->fetchAll(PDO::FETCH_NUM)[0];
     }
 }
+<<<<<<< HEAD
 ?>
 
+=======
+?>
+>>>>>>> 113176ed0b35aeafdcfccaf3e6686c53d571e4a0
