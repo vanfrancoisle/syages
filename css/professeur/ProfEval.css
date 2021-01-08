@@ -1,7 +1,9 @@
 /***************** Table historique des eval crée ***********************/
+
 .wrapper .body .tabeval{
     display: flex;
     overflow: hidden;
+    margin-left: 300px; 
 }
 
 .wrapper .body .tabeval table td{
@@ -78,6 +80,7 @@
     margin: 2px;
     border:1px solid white;
     border-radius:2px;
+    background-color :rgb(68, 68, 68);
 }
 .wrapper .body .tabeval .eval p #submit:hover{
     background-color: rgb(1, 238, 255);
@@ -89,6 +92,7 @@
     margin: 2px;
     border:1px solid white;
     border-radius:2px;
+    background-color :rgb(68, 68, 68);
 }
 .wrapper .body .tabeval .eval p #button:hover{
     background-color: rgb(1, 238, 255);
@@ -96,11 +100,16 @@
 }
 
 h2{
-    text-align: left;
-    margin-left: 245px;
+    text-align: center;
+    margin-left: 50px;
     color: white;
 }
 
 .front{
     color:white;
+}
+
+.btn_submit{
+   background-color: #031858;
+   border: 1px solid white;
 }
