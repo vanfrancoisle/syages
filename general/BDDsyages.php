@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 <?php 
 class Bddsyages{
     // Attribut qui contient l'objet PDO
@@ -619,3 +621,4 @@ class Bddsyages{
     }
 }
 ?>
+>>>>>>> cee34de04d37fa356f6c380a17269bfe171bdf8d
