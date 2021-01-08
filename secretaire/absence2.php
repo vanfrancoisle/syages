@@ -1,12 +1,12 @@
 <?php
 $title='Detail de l\'absence';
-require '../debut.php';
+require "../general/debut.php";
 echo '<link rel="stylesheet" type="text/css" href="/css/secretaire/style_absence2.css/">';  /*mettre le css qui vous est particulier pas le css general qui est deja défini dans le début.php*/
-require '../debut-2.php';
+require "../general/debut-2.php";
 $h3='Menu secretaire';
-require "../navbanner-secretaire.php"; 
+require "../general/navbanner-secretaire.php"; 
 
-require_once "../Bddsyages.php";
+require_once "../general/Bddsyages.php";
 
 $m = Bddsyages::getBddsyages(2);
 ?> 
@@ -63,4 +63,4 @@ echo '<p> Nombre d\'absence Justifiée : '.$nbabsj;
                   </div>
                   </div>
 
-<?php  require '../fin.php' ; ?>
+<?php  require '../general/fin.php' ; ?>
