@@ -21,13 +21,14 @@ $m = Bddsyages::getBddsyages(2);
 
 <center><h1>Detail de l'absence </h1><br/></center>
 <?php
-$lesabsdeId = $m->les_une_personne(11111116);
-$nomPremonIdUser = $m->nom_prenom_user(11111116);
-$nomPromeIdUser = $m->nom_promo_user(11111116);
+$eleve = 11111116;
+$nomPremonIdUser = $m->nom_prenom_user($eleve);
+
 
 
 // je fais ici avec lesabsdeId !!
 $nbabsj=0;
+$lesabsdeId=$m->absence_eleve($eleve);
 foreach($lesabsdeId as $abs){
 	if($abs['Justif']=="1") $nbabsj++;
 }

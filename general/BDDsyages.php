@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <?php 
 class Bddsyages{
     // Attribut qui contient l'objet PDO
@@ -27,7 +25,7 @@ class Bddsyages{
 		}
  
 		else if($entier==2){
-		  $this->bd = new PDO('mysql:host=localhost;dbname=bddsyages', 'root', '');
+		  $this->bd = new PDO('mysql:host=localhost;dbname=bddsyages', 'root', 'root');
 		}
 
 		else if($entier==3){
@@ -633,4 +631,4 @@ class Bddsyages{
     }
 }
 ?>
->>>>>>> cee34de04d37fa356f6c380a17269bfe171bdf8d
+
