@@ -99,7 +99,7 @@ $m = Bddsyages::getBddsyages(2);
 					</select></p>
 					<p><label>Type d'évaluation:<input text="text" name="eval"/></label></p> 
                     <p><label>Coefficient:<input type="number" name="coef" required step="any"></label></p>
-					<button class="btn_submit" type="submit">Gérer une promo</button>
+					<button class="btn_submit" type="submit">Créer l'évaluation</button>
                 </form>
 				<form action="gestion_controle" method="post">
 					<p>DAEU : 
@@ -120,7 +120,7 @@ $m = Bddsyages::getBddsyages(2);
 						}
 						?>
 					</select></p>
-					<button class="btn_submit" type="submit">Gérer une promo</button>
+					<button class="btn_submit" type="submit">Gérer la promo</button>
                 </form>
             </div>
         </div>
