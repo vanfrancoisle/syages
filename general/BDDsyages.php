@@ -182,6 +182,13 @@ class Bddsyages{
         return $lesM;
     }
 	
+	public function recuperer_infoProf($id){
+        $req = $this->bd->prepare("SELECT InscriptionMatiere, Mail, Téléphone from users where idUser= :id and Drapeau = 0;");
+        $req->bindValue(':id',$id);
+        $req->execute();
+        return $req-> fetchALL(PDO:: FETCH_ASSOC);
+    }
+	
 	public function nom_matiere($idm){
         $requeteMatiere = $this->bd->prepare("SELECT `Nom` FROM matiere where idMatiere=:idm and Drapeau = 0;");
 		$requeteMatiere->bindValue(":idm",$idm);
@@ -572,6 +579,12 @@ class Bddsyages{
         return $req->fetchAll(PDO::FETCH_NUM)[0];
     }
 
+// PROMOTION NOUVELLE
+    public function recuperer_infoPromoNew(){
+        $req = $this->bd->prepare("SELECT NomPromo, `Option`, DateDebut, DateFin, matieres from promotion where Drapeau=0");
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 // PROMOTION ANCIENNE
     public function lespromoAnciennes(){
