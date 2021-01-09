@@ -107,18 +107,17 @@ $m = BDDsyages::getBddsyages(2);
 		<table class="styled-table">
 		<thead>
 			<tr class="active_row">
-				<th>Matière(s) enseignée(s)</th>
-				<th>Date De Naissance</th>
-				<th>E-mail</th>
-				<th>Num Portable</th>
+				<th>Matière(s) enseignée(s)</th><th>E-mail</th><th>Num Portable</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr class="row">
-				<td>Mathématiques & Physique</td>
-				<td>10/01/1947</td>
-				<td>realgangsta@shutup.com</td>
-				<td>012344321</td>
+				<?php 
+					$idProf = 11111116;
+					$info = $m->recuperer_infoProf($idProf);
+					foreach ($info as $if){
+						echo '<td>' . $if['InscriptionMatiere'] . '</td><td>' . $if['Mail'] . '</td><td>' . $if['Téléphone'] . '</td>';
+					}?>
 			</tr>
 		</tbody>
 	</table>
@@ -128,10 +127,12 @@ $m = BDDsyages::getBddsyages(2);
 		<!-------------------------------TAB PROMO ACTIVE------------------------------------>
 		<div class="tabpromo">
 			<table>
-			<tr><th>Année</th><th>Nombre d'élèves</th><th>DAEU : </th><th>Nombre d'heure de cours</th></tr>
-				<tr><td><a href="#">2020-2021</a></td><td>30</td><td>DAEU A</td><td>13H</td></tr>
-				<tr><td><a href="#">2020-2021</a></td><td>23</td><td>DAEU B</td><td>16H</td></tr>
-
+			<tr><th>Date début</th><th>Date fin</th><th>DAEU options</th><th>Nom de la promotion</th><th>Matières</th></tr>
+				<?php 
+					$newProm= $m->recuperer_infoPromoNew();
+					foreach ($newProm as $new){
+						echo '<tr><td>' . $new['DateDebut'] . '</td><td>' . $new['DateFin'] . '</td><td>' . $new['Option'] . '</td><td>' . $new['NomPromo'] . '</td><td>' . $new['matieres'] . '</td></tr>';
+					}?>
 			</table>
 		</div>
 		<!------------------------------------------------------------------------------------>
@@ -141,15 +142,25 @@ $m = BDDsyages::getBddsyages(2);
 		<div class="tabpromo">
 			<div class="scroll">
 			<table class="tabB">
-			<tr><th>Année</th><th>Nombre d'élèves</th><th>DAEU : </th></tr>
-				<tr><td><a href="#">2019-2020</a></td><td>32</td><td>DAEU A</td></tr>
-				<tr><td><a href="#">2019-2020</a></td><td>27</td><td>DAEU B</td></tr>
-				<tr><td><a href="#">2018-2019</a></td><td>26</td><td>DAEU A</td></tr>
-				<tr><td><a href="#">2018-2019</a></td><td>24</td><td>DAEU B</td></tr>
-				<tr><td><a href="#">2017-2018</a></td><td>30</td><td>DAEU A</td></tr>
-				<tr><td><a href="#">2017-2018</a></td><td>30</td><td>DAEU B</td></tr>
-				<tr><td><a href="#">2016-2017</a></td><td>28</td><td>DAEU A</td></tr>
-				<tr><td><a href="#">2016-2017</a></td><td>23</td><td>DAEU B</td></tr>
+			<tr><th>Date début</th><th>Date fin</th><th>Nom de la promotion</th><th>Inscrits</th><th>Moyenne générale</th></tr>
+							<?php 
+                                    $tabPromo= $m->lespromoAnciennes();
+                                    if (!empty($tabPromo)){
+                                        $anneefin = explode("-",$tabPromo[0]["datedebut"]);
+                                        $anneedebut = explode("-",$tabPromo[0]["dateFin"]);
+                                        echo '<tr class="titre_annee"><td colspan="7">Année '.$anneedebut[0].'-'.$anneefin[0].'</td></tr>';
+                                        foreach ($tabPromo as $key => $value) {
+                                            $fin = explode("-",$tabPromo[0]["datedebut"]);
+                                            $debut = explode("-",$tabPromo[0]["dateFin"]);
+                                            if ($anneedebut[0]!=$debut[0] or $anneefin[0]!=$fin[0]){
+                                                echo '<tr class="titre_annee"><td colspan="7">Année '.$anneedebut[0].'-'.$anneefin[0].'</td></tr>';
+                                            }
+											echo '<tr><td>'.$value["datedebut"].'</td><td>'.$value["dateFin"].'</td><td><a href="#">'.$value["nomPromo"].'</a></td><td>'.$bd->get_nbInscrit($value["idPromotion"])[0].'</td></td><td>'.$bd->get_moyennePromo($value["idPromotion"])[0].'</td></tr>';
+                                        }
+                                    } else {
+                                    echo '<tr class="titre_annee"><td colspan="7">Aucune promotion ancienne</td></tr>';
+                                    }
+                            ?>
 			</table>
 			</div>
 		</div>
@@ -157,4 +168,3 @@ $m = BDDsyages::getBddsyages(2);
 <?php
 require "../general/fin.html";
 ?>
-    <!-------------------------------------------CODE PAGE ACCUEIL PROF------------------------------------------------------>    
