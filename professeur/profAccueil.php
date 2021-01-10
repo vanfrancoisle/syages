@@ -1,7 +1,12 @@
 <?php
-require "../general/debut.html";
-require "../general/menu.html";
-
+$title='Acceuil';
+require "../general/debut.php";
+echo '<link rel="stylesheet" type="text/css" href="../css/professeur/accueil_prof.css">';
+echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';
+echo "<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>";
+require '../general/debut-2.php';
+$h3='Menu-Professeur';
+require "../general/navbanner-professeur.php";
 require '../general/BDDsyages.php';
 $m = BDDsyages::getBddsyages(2);
 
