@@ -65,7 +65,7 @@ $m = BDDsyages::getBddsyages(2);
 <!-------------------------------------------CODE PAGE ACCUEIL PROF----------------------------------------------------------------->
  <!---------------------------Circle----------------------------------->
   <div>  
-    <h2 class="heading"> PROMO ACTIVE </h2>
+    <h2 class="heading"> Taux de réussite de la Promo Active </h2>
     <div class="wrapper2">
       
       <div class="card 1">
