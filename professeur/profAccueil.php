@@ -73,7 +73,7 @@ $m = BDDsyages::getBddsyages(2);
           <div class="bar"></div>
           <div class="box"><span></span></div>
         </div>
-        <div class="text">Taux de réussite en Maths</div>
+        <div class="text"><a href="#">Taux de réussite en Maths</a></div>
       </div>
 
 
@@ -82,7 +82,7 @@ $m = BDDsyages::getBddsyages(2);
           <div class="bar"></div>
           <div class="box"><span></span></div>
         </div>
-        <div class="text">Taux de réussite en Physique</div>
+        <div class="text"><a href="#">Taux de réussite en Physique</a></div>
       </div>
 
 
@@ -91,7 +91,7 @@ $m = BDDsyages::getBddsyages(2);
           <div class="bar"></div>
           <div class="box"><span></span></div>
         </div>
-        <div class="text">Moyenne générale</div>
+        <div class="text"><a href="#">MOYENNE GENERALE</a></div>
       </div>
 
 
@@ -125,7 +125,7 @@ $m = BDDsyages::getBddsyages(2);
 
    <!-----------------MES INFOS------------------->
 	<div>
-		<h2>MES INFOS</h2>
+		<h2><a href="#">MES INFOS</a></h2>
 		<table class="styled-table">
 		<thead>
 			<tr class="active_row">
@@ -143,7 +143,7 @@ $m = BDDsyages::getBddsyages(2);
 			</tr>
 		</tbody>
 	</table>
-		<h2>PROMOTION ACTIVE</h2>
+		<h2><a href="#">PROMOTION ACTIVE</a></h2>
 	</div>
 
 		<!-------------------------------TAB PROMO ACTIVE------------------------------------>
@@ -153,14 +153,14 @@ $m = BDDsyages::getBddsyages(2);
 				<?php 
 					$newProm= $m->recuperer_infoPromoNew();
 					foreach ($newProm as $new){
-						echo '<tr><td>' . $new['DateDebut'] . '</td><td>' . $new['DateFin'] . '</td><td>' . $new['Option'] . '</td><td>' . $new['NomPromo'] . '</td><td>' . $new['matieres'] . '</td></tr>';
+						echo '<tr><td>' . $new['DateDebut'] . '</td><td>' . $new['DateFin'] . '</td><td>' . $new['Option'] . '</td><td><a href="#">' . $new['NomPromo'] . '</a></td><td>' . $new['matieres'] . '</td></tr>';
 					}?>
 			</table>
 		</div>
 		<!------------------------------------------------------------------------------------>
 	   
 		<!--------------------------------TAP ANCIENNE PROMO---------------------------------->
-		<h2>ANCIENNE PROMO </h2>
+		<h2><a href="#">ANCIENNE PROMO </a></h2>
 		<div class="tabpromo">
 			<div class="scroll">
 			<table class="tabB">
@@ -168,7 +168,7 @@ $m = BDDsyages::getBddsyages(2);
 							<?php 
 									$oldProm= $m->lespromoAnciennes();
 									foreach ($oldProm as $new){
-										echo '<tr><td>' . $new['DateDebut'] . '</td><td>' . $new['DateFin'] . '</td><td>' . $new['Option'] . '</td><td>' . $new['NomPromo'] . '</td><td>' . $new['matieres'] . '</td></tr>';
+										echo '<tr><td>' . $new['DateDebut'] . '</td><td>' . $new['DateFin'] . '</td><td>' . $new['Option'] . '</td><td><a href="#">' . $new['NomPromo'] .'</a></td><td>' . $new['matieres'] . '</td></tr>';
 									}?>
 			</table>
 			</div>
