@@ -27,8 +27,6 @@ if(isset($_POST['promo']) and preg_match("#^[1-9]\d*$#",$_POST['promo'])
 $c=$m->recuperer_controle($idPromo, $idMatiere);
 $nbEval=$m->nb_eval_matiere_promo($idPromo, $idMatiere);
 
-
-
 ?>
 <div class="body" id="body">
 <div class="melbanner">
@@ -37,6 +35,8 @@ $nbEval=$m->nb_eval_matiere_promo($idPromo, $idMatiere);
     <input type="text" placeholder="Entrez des mots-clés" id="searchbar"><input type="submit" value="Rechercher" id="submitbutton">
     <img src="../img/david.jpg" id="user"/>
 </div>
+
+
 <h2><br/>PROMOTION : DEAU <?= $m->nom_promo($idPromo)?></h2><br/>
 			
 <h2>Matière : <?= $m->nom_matiere($idMatiere)?></h2><br/>

@@ -1,0 +1,91 @@
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+    background-color: #111213;
+}
+
+
+/**************************************
+*   Everything Related to search bar  *
+***************************************/
+.search_input {
+	
+	width: 20%;
+    height: 31px;
+    padding: 10px 8px 9px 26px;
+    border: 1px solid rgb(30, 50, 59);
+    text-align: center;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+}
+
+h2{
+    text-align: center;
+    color: white;
+}
+
+.front{
+    color:white;
+}
+
+/******************************************/
+
+
+
+/*********************************************
+*               Table Scroll                 *
+*********************************************/
+.scrollable{
+    height: 400px;
+    overflow-y: scroll;
+    border-bottom: 1px solid rgb(24, 23, 23);
+    
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+/*********************************************/
+
+
+
+/**********************************************
+*               overall Table                 *
+**********************************************/ 
+.my_tabel {
+    border-collapse: collapse;
+    width: 70%; 
+    border: 1px solid rgb(0, 0, 0);
+    text-align: center;
+    font-size: 17px; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.my_tabel th, .my_tabel td {
+    text-align: left;
+    padding: 12px; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.my_tabeltr {
+    border-bottom: 1px solid rgb(0, 0, 0); 
+}
+
+#myTable tr.header, #myTable tr:hover {
+    background-color: #4a93d8;
+}
+table, .line{
+	border: 1px solid;
+}
+thead
+{
+	background-color: rgba(43, 43, 255, 0.8);
+}
+
+/*****************************************************/
