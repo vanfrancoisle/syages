@@ -73,7 +73,7 @@ $m = BDDsyages::getBddsyages(2);
           <div class="bar"></div>
           <div class="box"><span></span></div>
         </div>
-        <div class="text">MATHS</div>
+        <div class="text">Taux de réussite en maths</div>
       </div>
 
 
@@ -82,7 +82,7 @@ $m = BDDsyages::getBddsyages(2);
           <div class="bar"></div>
           <div class="box"><span></span></div>
         </div>
-        <div class="text">PHYSIQUE</div>
+        <div class="text">Taux de réussite en Physique</div>
       </div>
 
 
@@ -91,7 +91,7 @@ $m = BDDsyages::getBddsyages(2);
           <div class="bar"></div>
           <div class="box"><span></span></div>
         </div>
-        <div class="text">MOYENNE GENERALE</div>
+        <div class="text">Taux de réussite de la moyenne générale</div>
       </div>
 
 
