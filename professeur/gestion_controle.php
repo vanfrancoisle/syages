@@ -38,7 +38,6 @@ $nbEval=$m->nb_eval_matiere_promo($idPromo, $idMatiere);
 
 
 <h2><br/>PROMOTION : DEAU <?= $m->nom_promo($idPromo)?></h2><br/>
-			
 <h2>Matière : <?= $m->nom_matiere($idMatiere)?></h2><br/>
 <h2>Semestre 1 </h2><br/>
 <div id="btn_eval_abs">
