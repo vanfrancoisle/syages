@@ -1,5 +1,5 @@
 <?php
-if(isset($_POST['promo']) and preg_match("#^[1-9]\d*$#",$_POST['promo']) 
+if(isset($_POST['promo']) and preg_match("#^[1-9]\d*$#",$_POST['promo'])
 		and isset($_POST['idMatiere']) and preg_match("#^[1-9]\d*$#",$_POST['idMatiere'])){
 	$idPromo=$_POST['promo'];
 	$lesusers = $m->user_promo($idPromo);
@@ -12,7 +12,7 @@ if(isset($_POST['promo']) and preg_match("#^[1-9]\d*$#",$_POST['promo'])
     <h3><?php if(isset($h3)){echo $h3;} ?></h3>
     <ul>
         <li><a href="../professeur/profAccueil.php"><img src ="../img/home.ico"/>ACCUEIL</a></li>
-        <li><a href="../general/recherche"><img src ="../img/search.png"/>RECHERCHER</a></li>
+        <li><a href="../general/recherche.php"><img src ="../img/search.png"/>RECHERCHER</a></li>
         <li><a href="../professeur/appel_absence"><img src ="../img/attendance.png"/>FAIRE L'APPEL</a></li>
         <li><a href="../professeur/saisienote"><img src ="../img/grades.png"/>SAISIR NOTE</a></li>
         <li><a href="../professeur/gestion_controle"><img src ="../img/report-card.png"/>EVALUATION</a></li>

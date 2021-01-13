@@ -1,14 +1,14 @@
 <?php
     $title='Utilisateurs - ADMINISTRATEUR';
-    require 'debut.php';
-    require 'Syages.php';
-    require 'debut-2.php';
+    require '../general/debut.php';
+    require '../general/Syages.php';
+    require '../general/debut-2.php';
     $h3='Gestion des utilisateurs - ADMINISTRATEUR';
-    require 'navbanner-admin.php';
-    $syages = Syages::getModel(4);
+    require '../general/navbanner-admin.php';
+    $syages = Syages::getModel('admin','caca');
     $user = $syages->getInfosUser('99');
     $photo = $user[0]["Photo"];
-    require 'melbanner.php';
+    require '../general/melbanner.php';
     require_once 'Utils/functions.php';
 
  ?>

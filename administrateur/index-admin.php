@@ -6,7 +6,7 @@
     $h3='Accueil - ADMINISTRATEUR';
     require 'navbanner-admin.php';
     require 'Syages.php';
-    $syages = Syages::getModel(4);
+    $syages = Syages::getModel('admin','caca');
 
     $user = $syages->getInfosUser('99');
     $photo = $user[0]["Photo"];
