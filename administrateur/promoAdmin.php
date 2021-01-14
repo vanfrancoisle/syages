@@ -1,10 +1,10 @@
 <?php
 $title='Informations promotions';
-require '../debut.php';
+require '../general/debut.php';
 echo '<link rel="stylesheet" type="text/css" href="/css/administrateur/promoAdmin.css">';
-require '../debut-2.php';
-$h3='title';
-require '../navbanner-admin.php'; 
+require '../general/debut-2.php';
+$h3='Gérer les promotions';
+require '../general/navbanner-admin.php'; 
 
 ?>
 
@@ -15,7 +15,7 @@ $_SESSION["idEtablissement"]=1;
 $_SESSION["idUser"]=1;
 //
 
-require '../BDDsyages.php';
+require '../general/BDDsyages.php';
 if($_SESSION["role"]=="a"){
     $bd = BDDsyages::getBddsyages(4);
 }
@@ -324,4 +324,4 @@ function verif(){
 			</div>
             <footer></footer>
 
-<?php  require '../fin.php' ; ?>
+<?php  require '../general/fin.php' ; ?>
