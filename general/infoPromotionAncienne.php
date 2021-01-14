@@ -2,7 +2,6 @@
 $title='Les promotions anciennes';
 require '../debut.php';
 echo '<link rel="stylesheet" type="text/css" href="/css/general/InfoPromotionAncienne.css">';
-#echo '<link rel="stylesheet" type="text/css" href="/css/general/InfoPromotionAncienne.css">';  /*mettre le css qui vous est particulier pas le css general qui est deja défini dans le début.php*/
 require '../debut-2.php';
 $h3='Les promotions anciennes';
 require '../navbanner-secretaire.php'; ?>
@@ -11,8 +10,10 @@ require '../navbanner-secretaire.php'; ?>
 session_start();
 $_SESSION["role"]="s";
 $_SESSION["idUser"]="11111113";
+//Logs
+$texte = "\n".date("d-m-Y")."|";
+file_put_contents('log.txt', $texte."Consulter promotion ancienne|".$_SESSION["idUser"]."|Page infoPromotionAncienne",FILE_APPEND);
 ?>
-
 
         <div class="body" id="body">
             <div class="melbanner">
@@ -56,15 +57,6 @@ $_SESSION["idUser"]="11111113";
 
                         </table>
                     </div>
-
-
-                    
-
             </div>
-            
-        
-
-
-
 
 <?php  require '../fin.php' ; ?>

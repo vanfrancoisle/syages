@@ -1,9 +1,14 @@
 <?php
+<<<<<<< HEAD
 if(isset($_POST['promo']) and preg_match("#^[1-9]\d*$#",$_POST['promo'])
 		and isset($_POST['idMatiere']) and preg_match("#^[1-9]\d*$#",$_POST['idMatiere'])){
 	$idPromo=$_POST['promo'];
 	$lesusers = $m->user_promo($idPromo);
 	$idMatiere=$_POST['idMatiere'];
+=======
+if(isset($_POST['var'])){
+	$varTest=$_POST['promo'];
+>>>>>>> 11d502be584d74c14954892ed5cde14f7e226259
 }
 ?>
 <div class="nav_bar" id="navbar">

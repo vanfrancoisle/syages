@@ -5,11 +5,19 @@
     require '../general/debut-2.php';
     $h3='Gestion des utilisateurs - ADMINISTRATEUR';
     require '../general/navbanner-admin.php';
+<<<<<<< HEAD
     $syages = Syages::getModel('99','caca');
     $user = $syages->getInfosUser('99');
     $photo = $user[0]["Photo"];
     require '../general/melbanner.php';
     require_once '../Utils/functions.php';
+=======
+    $syages = Syages::getModel('admin','caca');
+    $user = $syages->getInfosUser('99');
+    $photo = $user[0]["Photo"];
+    require '../general/melbanner.php';
+    require_once 'Utils/functions.php';
+>>>>>>> 11d502be584d74c14954892ed5cde14f7e226259
 
  ?>
 

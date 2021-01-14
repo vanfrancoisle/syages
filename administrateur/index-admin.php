@@ -5,9 +5,15 @@
     echo '<link rel="stylesheet" type="text/css" href="../css/eleve/acceuil_eleve.css?v=<?=time()?>">';
     require '../general/debut-2.php';
     $h3='Accueil - ADMINISTRATEUR';
+<<<<<<< HEAD
     require '../general/navbanner-admin.php';
     require '../general/Syages.php';
     $syages = Syages::getModel('99','caca');
+=======
+    require 'navbanner-admin.php';
+    require 'Syages.php';
+    $syages = Syages::getModel('admin','caca');
+>>>>>>> 11d502be584d74c14954892ed5cde14f7e226259
 
     $user = $syages->getInfosUser('99');
     $photo = $user[0]["Photo"];

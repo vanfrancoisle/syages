@@ -317,19 +317,49 @@ class Bddsyages{
         $req->bindValue(":coef",$form["coef"]);
         $req->bindValue(":idPromotion",$form["idPromotion"]);
         $req->execute();
+        return $this->get_idMatiere($form["nomMatiere"],$form["idPromotion"]);
+    }
+
+    public function get_idMatiere($nomMatiere,$idPromotion){
+        $req = $this->bd->prepare('SELECT idMatiere from matiere where nom=:nomMatiere and idPromotion=:idPromotion and drapeau=0');
+        $req->bindValue(":idPromotion",$idPromotion);
+        $req->bindValue(":nomMatiere",$nomMatiere);
+        $req->execute();
+        $idMatiere = $req->fetchAll(PDO::FETCH_NUM);
+        if ($idMatiere!=false){
+            return $idMatiere[0][0];
+        }
+        return $idMatiere;
     }
 
     public function add_matiereObl($form){
-        $req=$this->bd->prepare('SELECT matieres from promotion where idpromotion=:idPromotion and Drapeau=0');
+        $req=$this->bd->prepare('SELECT matieres_obligatoires from promotion where idpromotion=:idPromotion and Drapeau=0');
         $req->bindValue(":idPromotion",$form["idPromotion"]);
         $req->execute();
         $matieresObl=$req->fetchAll(PDO::FETCH_NUM)[0][0];
-        $req = $this->bd->prepare('UPDATE promotion set matieres=:matieres where idPromotion=:idPromotion');
-        $req->bindValue(":matieres",$matieresObl."; ".$form["nomMatiere"]);
+        $req = $this->bd->prepare('UPDATE promotion set matieres_obligatoires=:matieres_obligatoires where idPromotion=:idPromotion');
+        if (is_null($matieresObl)){
+            $req->bindValue(":matieres_obligatoires",$form["idMatiere"]);
+        } else {
+            $req->bindValue(":matieres_obligatoires",$matieresObl.",".$form["idMatiere"]);
+        }
         $req->bindValue(":idPromotion",$form["idPromotion"]);
         $req->execute();
+    }
 
-
+    public function add_matiereOpt($form){
+        $req=$this->bd->prepare('SELECT matieres_facultatives from promotion where idpromotion=:idPromotion and Drapeau=0');
+        $req->bindValue(":idPromotion",$form["idPromotion"]);
+        $req->execute();
+        $matieresOpt=$req->fetchAll(PDO::FETCH_NUM)[0][0];
+        $req = $this->bd->prepare('UPDATE promotion set matieres_facultatives=:matieres_facultatives where idPromotion=:idPromotion');
+        if (is_null($matieresOpt)){
+            $req->bindValue(":matieres_facultatives",$form["idMatiere"]);
+        } else {
+            $req->bindValue(":matieres_facultatives",$matieresOpt.",".$form["idMatiere"]);
+        }
+        $req->bindValue(":idPromotion",$form["idPromotion"]);
+        $req->execute();
     }
 
     public function sup_matiere($form){
@@ -340,18 +370,21 @@ class Bddsyages{
     }
 
     public function supp_matiereObl($form){
-        $req=$this->bd->prepare('SELECT matieres from promotion where idpromotion=:idPromotion and Drapeau=0');
+        $req=$this->bd->prepare('SELECT matieres_obligatoires from promotion where idpromotion=:idPromotion and Drapeau=0');
         $req->bindValue(":idPromotion",$form["idPromotion"]);
         $req->execute();
         $matieresObl=$req->fetchAll(PDO::FETCH_NUM)[0][0];
-        $matieresObl=explode("; ", $matieresObl);
+        $matieresObl=explode(",", $matieresObl);
+        $form["idMatiere"]=$this->get_idMatiere($form["nomMatiere"],$form["idPromotion"]);
         foreach ($matieresObl as $key => $value) {
-            if ($value==$form["nomMatiere"]){
+            if ($value==$form["idMatiere"]){
                 unset($matieresObl[$key]);
             }
         }
-        $req = $this->bd->prepare('UPDATE promotion set matieres=:matieres where idPromotion=:idPromotion');
-        $req->bindValue(":matieres",implode(", ",$matieresObl));
+        var_dump($form);
+        var_dump($matieresObl);
+        $req = $this->bd->prepare('UPDATE promotion set matieres_obligatoires=:matieres_obligatoires where idPromotion=:idPromotion');
+        $req->bindValue(":matieres_obligatoires",implode(",",$matieresObl));
         $req->bindValue(":idPromotion",$form["idPromotion"]);
         $req->execute();
     }
@@ -365,47 +398,52 @@ class Bddsyages{
 
     }
 
-    public function all_matiereDAEU($option){
-        $req = $this->bd->prepare('SELECT distinct nom from matiere inner join promotion on promotion.idPromotion=matiere.idPromotion where  promotion.option=:option and matiere.drapeau=0');
+
+    public function all_matieresObligatoires($option){
+        $req = $this->bd->prepare('SELECT distinct nom from matiere inner join promotion on promotion.idPromotion=matiere.idPromotion where promotion.option=:option and matieres_obligatoires like concat("%",idMatiere,"%") and matiere.drapeau=0');
         $req->bindValue(":option",$option);
         $req->execute();
         $matiere = $req->fetchAll(PDO::FETCH_NUM);
-        foreach ($matiere as $key => $value) {
+        # regroupe les matieres en un seul tableau
+        foreach ($matiere as $key => $value) { 
+            $matiere[$key]=$value[0];
+        }
+        return $matiere;
+    }
+
+    public function all_matieresOptionnelles($option){
+        $req = $this->bd->prepare('SELECT distinct nom from matiere inner join promotion on promotion.idPromotion=matiere.idPromotion where promotion.option=:option and matieres_facultatives like concat("%",idMatiere,"%") and matiere.drapeau=0');
+        $req->bindValue(":option",$option);
+        $req->execute();
+        $matiere = $req->fetchAll(PDO::FETCH_NUM);
+        # regroupe les matieres en un seul tableau
+        foreach ($matiere as $key => $value) { 
             $matiere[$key]=$value[0];
         }
         return $matiere;
     }
 
     public function get_obligatoireDAEU($option){
-        $req=$this->bd->prepare('SELECT matieres from promotion where promotion.Option=:option and Drapeau=0');
+        $req=$this->bd->prepare('SELECT matieres_obligatoires from promotion where promotion.Option=:option and Drapeau=0');
         $req->bindValue(":option",$option);
         $req->execute();
         return $req->fetchAll(PDO::FETCH_NUM);
     }
 
-    public function get_nomMatiere($nom){
-        $req=$this->bd->prepare('SELECT distinct nom,mode,coef from matiere where Nom=:nom and Drapeau=0');
-
-        $req->bindValue(":nom",$nom);
+    public function get_nomMatiere($idMatiere){
+        $req=$this->bd->prepare('SELECT distinct nom,mode,coef from matiere where idMatiere=:idMatiere and Drapeau=0');
+        $req->bindValue(":idMatiere",$idMatiere);
         $req->execute();
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
 
-    public function set_matiereObligatoire($form){ //Ajout la promotion les matières des DAEUs
-        $tab = ["matiereObligatoire","nomPromo","daeu","dateDebut","dateFin","paraDiplome","paraValidation"];
-        $req = $this->bd->prepare('UPDATE promotion SET matieres=:matiereObligatoire where NomPromo=:nomPromo and promotion.Option=:daeu and dateDebut=:dateDebut and dateFin=:dateFin and paraDiplome=:paraDiplome and paraValidation=:paraValidation');
+    public function set_matiereObligatoire($form){ //Ajout la promotion les matières des DAEUs 
         
-        foreach ($form as $key => $value) {
-            if (in_array($key, $tab)){
-                $req->bindValue(":".$key,$value);
-            }
-        }
-        $req->execute();
-        // Get l'id promotion pour ajouter les matieres obligatoires
-
-        $req = $this->bd->prepare('SELECT idPromotion from promotion where NomPromo=:nomPromo and promotion.Option=:daeu and dateDebut=:dateDebut and dateFin=:dateFin and paraDiplome=:paraDiplome and paraValidation=:paraValidation and matieres=:matiereObligatoire');
+        $tab = ["nomPromo","daeu","dateDebut","dateFin","paraDiplome","paraValidation"];
+        // Get l'id promotion
+        $req = $this->bd->prepare('SELECT idPromotion from promotion where NomPromo=:nomPromo and promotion.Option=:daeu and dateDebut=:dateDebut and dateFin=:dateFin and paraDiplome=:paraDiplome and paraValidation=:paraValidation and drapeau=0');
         foreach ($form as $key => $value) {
             if (in_array($key, $tab)){
                 $req->bindValue(":".$key,$value);
@@ -413,17 +451,18 @@ class Bddsyages{
         }
         $req->execute();
         $form["idPromotion"]=$req->fetchAll(PDO::FETCH_NUM)[0][0];
+
         // On prend les matieres obligatoires et on les crée
-        $tab=explode("; ",$form["matiereObligatoire"]);
+        $tab=explode(",",$form["matiereObligatoire"]);
         foreach ($tab as $key => $value) {
-            $newform=$this->get_nomMatiere(ucfirst($value));
+            $newform=$this->get_nomMatiere($value);
             if (!empty($newform)){
                 $newform=$newform[0];
                 $newform["nomMatiere"]=$newform["nom"];
                 $newform["idPromotion"]=$form["idPromotion"];
-                $this->add_matiere($newform);
+                $newform["idMatiere"]=$this->add_matiere($newform);
+                $this->add_matiereObl($newform);
             }
-            
         }
     }
 
@@ -438,39 +477,46 @@ class Bddsyages{
         return $daeu;
     }
 
-    public function obl_matiereDAEU($option){
-        $req = $this->bd->prepare('SELECT distinct matieres from promotion where promotion.option=:option and drapeau=0');
-        $req->bindValue(":option",$option);
-        $req->execute();
-        $matiere = $req->fetchAll(PDO::FETCH_NUM);
-        foreach ($matiere as $key => $value) {
-            $matiere[$key]=$value[0];
-        }
-        return $matiere;
-    }
-
-
-    public function add_prof($form){ 
-        $matiere_enseignee=$this->matiere_enseignee($form["idProf"])[0];
-        if (!in_array(lcfirst($form["nomMatiere"]),explode(", ", $matiere_enseignee))){
+    public function add_prof($form){
+        $matiere_enseignee=$this->matiere_enseignee($form["idProf"],$form["idPromotion"]);
+        if (!in_array($form["nomMatiere"] , $matiere_enseignee )){
             $req = $this->bd->prepare('UPDATE users SET InscriptionMatiere=:nomMatiere where idUser=:idUser');
-            $matiere_enseignee=$this->matiere_enseignee($form["idProf"])[0].", ".$form["nomMatiere"];
-            $req->bindValue(":nomMatiere",$matiere_enseignee);
+            #$matiere_enseignee=$this->matiere_enseignee($form["idProf"])[0].", ".$form["nomMatiere"];
+            $req->bindValue(":nomMatiere",implode(", ", $matiere_enseignee).", ".$form["nomMatiere"]);
             $req->bindValue(":idUser",$form["idProf"]);
             $req->execute();
+        }
+        $promotion_enseignee=$this->promo_enseignee($form["idProf"]);
+
+        if ($promotion_enseignee!=false){
+            if (!in_array($form["idPromotion"], explode(",", $promotion_enseignee[0][0]) ) ){
+                $req = $this->bd->prepare('UPDATE users SET InscriptionPeda=:idPromotion where idUser=:idUser');
+                #$matiere_enseignee=$this->matiere_enseignee($form["idProf"])[0].", ".$form["nomMatiere"];
+                $req->bindValue(":idPromotion",implode(",", $promotion_enseignee[0]).",".$form["idPromotion"]);
+                $req->bindValue(":idUser",$form["idProf"]);
+                $req->execute();
+            }
         }
         
     }
 
     public function sup_prof($form){
         $req = $this->bd->prepare('UPDATE users SET InscriptionMatiere=:nomMatiere where idUser=:idUser');
-        $matiere_enseignee=explode(", ",$this->matiere_enseignee($form["idProf"])[0]);
+        $matiere_enseignee=$this->matiere_enseignee($form["idProf"],$form["idPromotion"]);
         unset($matiere_enseignee[array_search($form["nomMatiere"], $matiere_enseignee)]);
 
         $req->bindValue(":nomMatiere",implode(", ",$matiere_enseignee));
         $req->bindValue(":idUser",$form["idProf"]);
         $req->execute();
     }
+
+    public function promo_enseignee($idUser){
+        $req = $this->bd->prepare('SELECT InscriptionPeda from users where idUser=:idUser and drapeau=0');
+        $req->bindValue(":idUser",$idUser);
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_NUM);
+    }
+
 
 //PROMOTION ACTIVE  Van-François
     public function get_nomPromo($idPromotion){
@@ -480,16 +526,20 @@ class Bddsyages{
         return $req->fetchAll(PDO::FETCH_NUM)[0];
     }
 
-
-    public function matiere_enseignee($idUser){
-        $req = $this->bd->prepare('SELECT InscriptionMatiere from users where role="p" and idUser=:idUser and drapeau=0');
+    public function matiere_enseignee($idUser,$idPromotion){
+        $req = $this->bd->prepare('SELECT matiere.nom from users inner join matiere on idPromotion=:idPromotion where role="p" and users.idUser=:idUser and InscriptionMatiere like concat("%",matiere.nom,"%") and matiere.drapeau=0');
         $req->bindValue(":idUser",$idUser);
+        $req->bindValue(":idPromotion",$idPromotion);
         $req->execute();
-        return $req->fetchAll(PDO::FETCH_NUM)[0];
+        $tab = $req->fetchAll(PDO::FETCH_NUM);
+        foreach ($tab as $key => $value) {
+            $tab[$key]=$value[0];
+        }
+        return $tab;
     }
 
-    public function get_matiere($idPromotion){
-        $req = $this->bd->prepare("SELECT matiere.nom from matiere inner join promotion on matiere.idPromotion = promotion.idPromotion where promotion.idPromotion=:idPromotion and matiere.drapeau=0 "); 
+    public function get_matieresObligatoires($idPromotion){
+        $req = $this->bd->prepare('SELECT matiere.nom from matiere inner join promotion on matiere.idPromotion = promotion.idPromotion where promotion.idPromotion=:idPromotion and matieres_obligatoires like concat("%",idMatiere,"%") and matiere.drapeau=0');
         $req->bindValue(":idPromotion",$idPromotion);
         $req->execute();
         $matiere = $req->fetchAll(PDO::FETCH_NUM);
@@ -498,18 +548,29 @@ class Bddsyages{
             $tabMatiere[$key]=$value[0];
         }
         return $tabMatiere;
+    }
 
+    public function get_matieresOptionnelles($idPromotion){
+        $req = $this->bd->prepare('SELECT matiere.nom from matiere inner join promotion on matiere.idPromotion = promotion.idPromotion where promotion.idPromotion=:idPromotion and matieres_facultatives like concat("%",idMatiere,"%") and matiere.drapeau=0');
+        $req->bindValue(":idPromotion",$idPromotion);
+        $req->execute();
+        $matiere = $req->fetchAll(PDO::FETCH_NUM);
+        $tabMatiere=array();
+        foreach ($matiere as $key => $value) { // Pour n'avoir qu'un tableau d'une clé -> valeur et pas clé -> valeur/clé ->valeur
+            $tabMatiere[$key]=$value[0];
+        }
+        return $tabMatiere;
     }
 
     public function get_professeur_promo($idPromotion,$matiere){
-        $req = $this->bd->prepare("SELECT nom FROM users inner join promotion on users.promo = promotion.idPromotion where role = 'p' and InscriptionMatiere like concat('%',:matiere,'%') and idPromotion=:idPromotion and promotion.drapeau=0");
+        $req = $this->bd->prepare("SELECT distinct nom, prénom FROM users natural join promotion where role = 'p' and InscriptionMatiere like concat('%',:matiere,'%') and InscriptionPeda like concat('%',:idPromotion,'%') and promotion.drapeau=0");
         $req->bindValue(":matiere",$matiere);
         $req->bindValue(":idPromotion",$idPromotion);
         $req->execute();
         $prof = $req->fetchAll(PDO::FETCH_NUM);
         $tabProf = array();
         foreach ($prof as $key => $value) {
-            $tabProf[$key]=$value[0];
+            $tabProf[$key]=$value[0]." ".$value[1];
         }
         return $tabProf;
 
@@ -578,6 +639,7 @@ class Bddsyages{
         $req->execute();
         return $req->fetchAll(PDO::FETCH_NUM)[0];
     }
+
 
 // PROMOTION NOUVELLE
     public function recuperer_infoPromoNew(){

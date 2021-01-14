@@ -10,12 +10,17 @@ class Syages{
   private $session;
 
   private function __construct($login,$mdp){
+<<<<<<< HEAD:general/Syages.php
       $this->bd = new PDO('mysql:host=localhost;dbname=SYAGES', 'juste','pourlaconnecxtion');
 
+=======
+      $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'juste','pourlaconnecxtion');
+>>>>>>> 11d502be584d74c14954892ed5cde14f7e226259:secretaire/Syages.php
       $req = $this->bd->prepare('SELECT idUser,MotDePasse,Role from users where idUser= :idUser');
       $req->bindValue(':idUser', $login);
       $req->execute();
       $user = $req->fetchAll(PDO::FETCH_ASSOC);
+<<<<<<< HEAD:general/Syages.php
       if(isset($user[0]) && password_verify($mdp,$user[0]["MotDePasse"])){
         if($user[0]["Role"]="e"){
           $this->bd = new PDO('mysql:host=localhost;dbname=Syages', 'eleve',     'eleve');
@@ -28,12 +33,29 @@ class Syages{
         }
         if($user[0]["Role"]="a"){
           $this->bd = new PDO('mysql:host=localhost;dbname=Syages', 'admin',     'admin');
+=======
+      if(password_verify($mdp,$user[0]["MotDePasse"])){
+        if($user[0]["Role"]="e"){
+          $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'eleve',     'eleve');
+        }
+        if($user[0]["Role"]="p"){
+          $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'eleve',     'eleve');
+        }
+        if($user[0]["Role"]="s"){
+          $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'eleve',     'eleve');
+        }
+        if($user[0]["Role"]="a"){
+          $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'eleve',     'eleve');
+>>>>>>> 11d502be584d74c14954892ed5cde14f7e226259:secretaire/Syages.php
         }
       }else{
         $this->session = 0;
       }
       $this->session = $user[0];
+<<<<<<< HEAD:general/Syages.php
       var_dump($user[0]);
+=======
+>>>>>>> 11d502be584d74c14954892ed5cde14f7e226259:secretaire/Syages.php
 
     $this->bd->query("SET NAMES 'utf8'");
 
