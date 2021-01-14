@@ -25,7 +25,7 @@ class Bddsyages{
 		}
  
 		else if($entier==2){
-		  $this->bd = new PDO('mysql:host=localhost;dbname=bddsyages', 'root', '');
+		  $this->bd = new PDO('mysql:host=localhost;dbname=bddsyages', 'root', 'root');
 		}
 
 		else if($entier==3){
