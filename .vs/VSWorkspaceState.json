@@ -1,11 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\css\\professeur",
-    "\\eleve",
-    "\\general",
-    "\\professeur"
+    "\\css",
+    "\\professeur",
+    "\\secretaire"
   ],
-  "SelectedNode": "\\eleve\\contenu_note.php",
+  "SelectedNode": "\\secretaire\\absence2.php",
   "PreviewInSolutionExplorer": false
 }

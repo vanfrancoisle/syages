@@ -1,3 +1,21 @@
+<?php
+  require 'Syages.php';
+  if(isset($_POST)){
+      if( isset($_POST["idUser"],$_POST["password"])){
+        echo '<p>Test dans le if</p>';
+        $syages = Syages::getModel($_POST["idUser"],e($_POST["password"]));
+        session_start();
+        $_SESSION = $syages->getSession();
+        if($_SESSION==[]){
+          echo '<p style="background-color:red;color:black">Une erreur a empêché la connection, Veuillez vérifier vos informations de connections.</p>';
+        }
+        else{
+          header("index.php");//TODO
+        }
+
+      }
+  }
+?>
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -39,11 +57,11 @@
               <form action="" method="post">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Login</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input type="text" name="idUser" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Mot de passe</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1">
+                  <input type="password" class="form-control" id="exampleInputPassword1" name='password'>
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">

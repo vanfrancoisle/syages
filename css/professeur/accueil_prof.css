@@ -100,8 +100,8 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 400px;
+    padding-right: 400px;
     padding-top: 3Opx;
 }
 
@@ -129,7 +129,7 @@
 
 .wrapper .body .tabpromo table th{
     background-color: rgba(100,100,255,0.6);
-    border-color: rgba(58,58,211,0.747);
+    border-color: rgba(207, 207, 207, 0.932)
 }
 
 .wrapper .body .tabpromo table td,tr,th{padding: 10px;}

@@ -1,30 +1,37 @@
 <?php
 
     $title='Accueil - ADMINISTRATEUR';
-    require 'debut.php';
-    require 'debut-2.php';
+    require '../general/debut.php';
+    echo '<link rel="stylesheet" type="text/css" href="../css/eleve/acceuil_eleve.css?v=<?=time()?>">';
+    require '../general/debut-2.php';
     $h3='Accueil - ADMINISTRATEUR';
+<<<<<<< HEAD
+    require '../general/navbanner-admin.php';
+    require '../general/Syages.php';
+    $syages = Syages::getModel('99','caca');
+=======
     require 'navbanner-admin.php';
     require 'Syages.php';
-    $syages = Syages::getModel(4);
+    $syages = Syages::getModel('admin','caca');
+>>>>>>> 11d502be584d74c14954892ed5cde14f7e226259
 
     $user = $syages->getInfosUser('99');
     $photo = $user[0]["Photo"];
 
-    require 'melbanner.php';
-    require 'indexgraph0.php';
-    require_once 'Utils/functions.php';
+    require '../general/melbanner.php';
+    require '../graphes/indexgraph0.php';
+    require_once '../Utils/functions.php';
 
-    // get contents of a file into a string
-    logger("naturephp","utilisateurphp","logphp");
     if(!(file_exists('../../log/log.txt'))){
         file_put_contents('../../log/log.txt','');
     }
-    $contents  = file_get_contents('../../log/log.txt');
-    $fichierLog = explode("\n",$contents);
-    var_dump(getcwd());
+    logger("naturephp","utilisateurphp","logphp");
+
+      $contents  = file_get_contents('../../log/log.txt');
+      $fichierLog = explode("\n",$contents);
+    /*var_dump(getcwd());
     var_dump(get_current_user());
-    /*$user[0]["idUser"]*/
+    $user[0]["idUser"]*/
 ?>
             <script>
             let label1A = "Mes notes";
@@ -37,7 +44,7 @@
             let data2B = [0,7, 9, 21, 34];
             </script>
 
-                <?php require 'index-graph.php';?>
+                <?php require '../graphes/index-graph.php';?>
 
                 <p>Bilan : il y a xxx absences constatées au cours de cette semaine dont xxx justifiées et donc xxx injustifiées. Les élèves devant justifier leurs absences sont : implode("select nom from user join absences on absence.iDEtudiant=user.iD and absence.justifie!=true;" , " ") <em>PHP</em><br/><br/></p>
 
@@ -65,163 +72,19 @@
 
             <div class='tababs'>
             <div class="mes-infos">
-                <h2>MES INFORMATIONS</h2>
-                <div class="infos-images">
-                <img src=<?= e($user[0]["Photo"]);?> style="height:80px;border:3px solid white;margin-top: auto;margin-bottom: auto;"></div>
+                <h2 style="background-color:orange"> MES INFORMATIONS<br>
+
+              <img src=<?= e($user[0]["Photo"]);?> style="height:80px;"><br><a href="user_update_admin.php?u=<?=e($user[0]["idUser"]);?>"><img src="../img/edit.png" style="height: 22px; margin-left:80%;"></a></h2>
+
                 <div class="infos-text">
                     <table class="table" style="height:100%">
                         <tr id="champs-infos"><th>Prénom</th><td><?= e($user[0]["Prénom"]); ?></td></tr>
                         <tr id="champs-infos"><th>Login</th> <td><?= e($user[0]["idUser"]); ?></td></tr>
-                        <tr id="champs-infos"><th>Mot de passe :</th> <td>•••••••• <a href="user_update_admin.php?u=<?=e($user[0]["idUser"]);?>"><img src="img/edit.png" style="height: 22px;background-color: white; margin-left:.1%;"></a></td></tr>
+                        <tr id="champs-infos"><th>Mot de passe :</th> <td>•••••••• </td></tr>
                     </table>
                 </div>
             </div>
-            <div class="form-conteneur" style="margin: 0px;">
-              <form action="" method="post">
-                  <h2>Créer des utilisateurs</h2>
-                  <div class="champ-formulaire">
-                      <p>Prénom</p>
-                      <input type="text" id="name" name="Prénom" placeholder="Prénom"/>
-                  </div>
-
-                  <div class="champ-formulaire">
-                      <p>Nom</p>
-                      <input type="text" id="name" name="Nom" placeholder="Nom"/>
-                  </div>
-
-                  <div class="champ-formulaire">
-                      <p>Identifiant</p>
-                      <input type="text" id="name" name="idUser" placeholder="Identifiant"/>
-                  </div>
-
-                  <div class="champ-formulaire">
-                      <p>Numéro de téléphone</p>
-                      <input type="text" id="name" name="phone" placeholder="01.02.03.04.05"/>
-                  </div>
-
-                  <div class="champ-formulaire">
-                      <p>MDP</p>
-                      <input type="password" id="name" name="password" placeholder="••••••••"/>
-                  </div>
-
-                  <div class="champ-formulaire">
-                      <p>Promo</p>
-                      <select id="sel" name="selection">
-                      <?php
-                          $promo_actives = $syages->getPromoActivesOuPas('1');
-                          foreach ($promo_actives as $key):
-                      ?>
-                          <option value="<?=$key["idPromotion"]?>"><?= $key["idPromotion"]?></option>
-                     <?php endforeach;
-                     ?>
-
-                      </select>
-                  </div>
-                  <div class="champ-formulaire">                             
-                          <p>login</p>                             
-                          <input type="text" id="login" name="login" placeholder="login"/>                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>nomepouse</p>                             
-                          <input type="text" id="nomepouse" name="nomepouse" placeholder="nomepouse"/>                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>mail</p>                             
-                          <input type="text" id="mail" name="mail" placeholder="mail"/>                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>idEtablissement</p>                             
-                          <input type="text" id="idEtablissement" name="idEtablissement" placeholder="idEtablissement"/>                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>Inscription</p>                             
-                          <input type="text" id="Inscription" name="Inscription" placeholder="Inscription"/>                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>Peda</p>                             
-                          <input type="text" id="Peda" name="Peda" placeholder="Peda"/>                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>Privé</p>                             
-                          <input type="text" id="InfoPrivee" name="InfoPrivee" placeholder="Info privée" />                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>Redoublement (n-1)</p>                             
-                          <select id="sel" name="redoublement">
-                              <option value="oui">Oui</option>
-                              <option value="non">Non</option>
-
-                          </select>
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>Personnalisation</p>                             
-                          <input type="text" id="Perqonnalisation" name="Perqonnalisation" placeholder="Personnalisation"/>                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>Data</p>                             
-                          <input type="text" id="Data" name="Data" placeholder="Data"/>                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>Historique</p>                             
-                          <input type="text" id="Historique" name="Historique" placeholder="Historique"/>                         
-                  </div>
-
-                  <div class="champ-formulaire">                             
-                          <p>Drapeau</p>                             
-                          <input type="text" id="Drapeau" name="Drapeau" placeholder="Drapeau"/>                         
-                  </div>
-                  <div class="champ-formulaire">
-                      <p>Rôle</p>
-                      <select id="sel" name="role">
-                          <option value="e">Eleve</option>
-                          <option value="p">Professeur</option>
-                          <option value="s">Secrétaire</option>
-                          <option value="a">Admin</option>
-
-                      </select>
-                  </div>
-                  <div class="champ-formulaire">
-                      <p>Avatar</p>
-                      <select id="sel" name="photo">
-                      <?php
-                          $dossier = "img/avatar/";
-                          $ls_dossier = scandir($dossier);
-                          foreach ($ls_dossier as $key):
-                          if(!($key[0]==='.')):
-                      ?>
-                          <option value="<?=$dossier.$key?>"><?=$key;?></option>
-                      <?php endif;endforeach;?>
-                      </select>
-                  </div>
-                  <input type="submit" value="Créer" id="btn"/>
-              </form>
-
-              <?php
-              if(isset($_POST["login"])){
-
-                    $boolmaamaa=$syages->addUser(e($_POST["Prénom"]),e($_POST["Nom"]),e($_POST["idUser"]),e(password_hash($_POST["password"],PASSWORD_DEFAULT)),e($_POST["role"]),e($_POST["selection"]),e($_POST["photo"]),e($_POST["phone"]),
-                  e($_POST["login"]),e($_POST["nomepouse"]),e($_POST["mail"]),e($_POST["idEtablissement"]),e($_POST["Peda"]),e($_POST["InfoPrivee"]),e($_POST["redoublement"]),e($_POST["Perqonnalisation"]),e($_POST["Data"]),
-                  e($_POST["Historique"]),e($_POST["Drapeau"]));
-
-                  if($boolmaamaa){
-                    echo '<p style="width:100%;background-color:green;">L\'utilisateur a été ajouté</p>';
-                  }
-                  else{
-                    echo '<p style="width:100%;background-color:red;">Ajout d\'utilisateur a échoué peut-être que quelqu\'un avec le même identifiant utilisateur existe déjà</p>';
-                  }
-              }
-              ?>
-            </div></div>
+          </div>
                 <div class="tababs">
                     <div class="tab">
                         <h2>Dernières absences</h2>
@@ -262,4 +125,4 @@
 
             </div>
 
-<?php  require 'fin.php';?>
+<?php  require '../general/fin.php';?>

@@ -50,17 +50,14 @@ ABSENCES PROMOTION DAEU 2020/2021</h1>
 
 			//echo 'les nombre d\'abs dans la bdd au total est : '.count($tab);
 			//echo 'les personnes \'abs sont au nombre de : '.count($les_personnes_abs );
+			//TEST
+
 			foreach($les_personnes_absJustif as $cle => $abs){
 				$nomPremonIdUser = $m->nom_prenom_user(intval($abs["idUser"]));
 				//var_dump($abs);
 				echo '<tr class ="bg"><td><B>'.$nomPremonIdUser["Nom"].'</B></td><td><B>'.$nomPremonIdUser["Prénom"].'</B></td><td> <B>'.intval($abs["nbAbsJustif"]).'</td><td><B>'.intval($abs["nbAbsJustif"]).'</B></td><td><B>1</td></B> <td> <button> <a href="absence2.html"> Cliquez ici !</a></button> </td></td> </tr>';
 			}
-			//var_dump($les_personnes_abs);
-			// regarde je fais au total !! 
-			// parceque tout à l'heure j'ai ajouté des personnes qui sont abs, donc ça augmente leur nombre d'abs !! ok 
-			// le les_personnes_abs a 5 abs, le 11111118 a 4, le reste ils ont 1 ok !
-			// c'est bon ??
-			// on fait Nombres Absences Justifiées ok !!
+			
 			?>
 			
   

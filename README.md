@@ -1,4 +1,4 @@
-# syages
+# Syages
 Projet tutoré S3 2020, IUT Villetaneuse
 
 Ce github nous permet de collaborer sur le projet tutoré SYAGES.
@@ -18,3 +18,6 @@ DOISSAINT	Dadson
 DOUCOURE	Moussa
 MAKIL	Marouan
 LE	Van-François
+
+## Description
+Plateforme de gestion pédagogique pour les élèves de DAEU.

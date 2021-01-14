@@ -1,15 +1,23 @@
 <?php
     $title='Utilisateurs - ADMINISTRATEUR';
-    require 'debut.php';
-    require 'Syages.php';
-    require 'debut-2.php';
+    require '../general/debut.php';
+    require '../general/Syages.php';
+    require '../general/debut-2.php';
     $h3='Gestion des utilisateurs - ADMINISTRATEUR';
-    require 'navbanner-admin.php';
-    $syages = Syages::getModel(4);
+    require '../general/navbanner-admin.php';
+<<<<<<< HEAD
+    $syages = Syages::getModel('99','caca');
     $user = $syages->getInfosUser('99');
     $photo = $user[0]["Photo"];
-    require 'melbanner.php';
+    require '../general/melbanner.php';
+    require_once '../Utils/functions.php';
+=======
+    $syages = Syages::getModel('admin','caca');
+    $user = $syages->getInfosUser('99');
+    $photo = $user[0]["Photo"];
+    require '../general/melbanner.php';
     require_once 'Utils/functions.php';
+>>>>>>> 11d502be584d74c14954892ed5cde14f7e226259
 
  ?>
 
@@ -135,7 +143,7 @@
                             <p>Avatar</p>
                             <select id="sel" name="photo">
                             <?php
-                                $dossier = "img/avatar/";
+                                $dossier = "../img/avatar/";
                                 $ls_dossier = scandir($dossier);
                                 foreach ($ls_dossier as $key):
                                 if(!($key[0]==='.')):
@@ -160,8 +168,8 @@
                         ?>
                         <tr><td><?=e($key["Nom"]);?></td><td><?=e($key["Prénom"])?></td><td><?=e($key["idUser"]);?></td><?=print_role(e($key["Role"]));?><td><?=e($key["promo"]);?></td>
                           <td><img style="height:70px" src="<?=e($key["Photo"]);?>" style="height: 40%"></td><td><?=e($key["Mail"]);?></td>
-                          <td><a href="user_update_admin.php?u=<?=e($key["idUser"])?>"><img src="img/edit.png" alt="modifier" style="height:15px;padding:1px;"></a></td>
-                          <td><a href="user_delete.php?u=<?=e($key["idUser"]);?>"><img src="img/delete.png" alt="supprimer" style="height:15px;padding:1px;"></a></td>
+                          <td><a href="user_update_admin.php?u=<?=e($key["idUser"])?>"><img src="../img/edit.png" alt="modifier" style="height:15px;padding:1px;"></a></td>
+                          <td><a href="user_delete.php?u=<?=e($key["idUser"]);?>"><img src="../img/delete.png" alt="supprimer" style="height:15px;padding:1px;"></a></td>
                           </tr>
                         <?php
                         endforeach;
@@ -174,5 +182,5 @@
 
 
 <?php
-    require 'fin.php';
+    require '../general/fin.php';
 ?>

@@ -1,15 +1,32 @@
 <?php
-require "../general/debut.html";
-require "../general/menu.html";
-
+$title='Acceuil';
+require "../general/debut.php";
+echo '<link rel="stylesheet" type="text/css" href="../css/professeur/accueil_prof.css">';
+echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';
+echo "<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>";
+echo '  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.2.2/circle-progress.min.js"></script>';
+require '../general/debut-2.php';
+$h3='Menu-Professeur';
+require "../general/navbanner-professeur.php";
 require '../general/BDDsyages.php';
 $m = BDDsyages::getBddsyages(2);
 
 ?>
+
+<div class="body" id="body">
+<div class="melbanner">
+    <button id="btn-menu1" onclick="show_hide()"><img src="../img/menu.png" id="menu"></button>
+    <img src="../img/logo.png" id="logo"/>
+    <input type="text" placeholder="Entrez des mots-clés" id="searchbar"><input type="submit" value="Rechercher" id="submitbutton">
+    <img src="../img/david.jpg" id="user"/>
+</div>
 <?php 
   	$mat= $m-> pourcentage_UneMatiere("Mathématiques");
   	$ph= $m-> pourcentage_UneMatiere("Physique");
-  	$to= $m-> pourcentage();
+	  $to= $m-> pourcentage();
+	 
 	
 
   	$i=0;
@@ -40,7 +57,7 @@ $m = BDDsyages::getBddsyages(2);
   	if (count($to)==0)
   		$total= 0;
   	else
-  		$total= $k/count($to);
+		  $total= $k/count($to); 
   	
 
 
@@ -48,15 +65,15 @@ $m = BDDsyages::getBddsyages(2);
 <!-------------------------------------------CODE PAGE ACCUEIL PROF----------------------------------------------------------------->
  <!---------------------------Circle----------------------------------->
   <div>  
-    <h2 class="heading"> PROMO ACTIVE </h2>
+    <h2 class="heading"> Taux de réussite de la Promo Active </h2>
     <div class="wrapper2">
       
-      <div class="card">
+      <div class="card 1">
         <div class="circle">
           <div class="bar"></div>
           <div class="box"><span></span></div>
         </div>
-        <div class="text">MATHS</div>
+        <div class="text"><a href="#">Taux de réussite en Maths</a></div>
       </div>
 
 
@@ -65,7 +82,7 @@ $m = BDDsyages::getBddsyages(2);
           <div class="bar"></div>
           <div class="box"><span></span></div>
         </div>
-        <div class="text">PHYSIQUE</div>
+        <div class="text"><a href="#">Taux de réussite en Physique</a></div>
       </div>
 
 
@@ -74,7 +91,7 @@ $m = BDDsyages::getBddsyages(2);
           <div class="bar"></div>
           <div class="box"><span></span></div>
         </div>
-        <div class="text">MOYENNE GENERALE</div>
+        <div class="text"><a href="#">MOYENNE GENERALE</a></div>
       </div>
 
 
@@ -91,10 +108,15 @@ $m = BDDsyages::getBddsyages(2);
       $(".circle .bar").circleProgress(options).on('circle-animation-progress',
       function(event, progress, stepValue){
         $(this).parent().find("span").text(String(stepValue.toFixed(2).substr(2)) + "%");
+	  });
+	  
+	  $(".1 .bar").circleProgress({
+        value: <?php echo $maths; ?>,
       });
       $(".2 .bar").circleProgress({
         value: <?php echo $phy; ?>,
-      });
+	  });
+	  
       $(".3 .bar").circleProgress({
         value: <?php echo $total; ?>,
       });
@@ -103,58 +125,55 @@ $m = BDDsyages::getBddsyages(2);
 
    <!-----------------MES INFOS------------------->
 	<div>
-		<h2>MES INFOS</h2>
+		<h2><a href="#">MES INFOS</a></h2>
 		<table class="styled-table">
 		<thead>
 			<tr class="active_row">
-				<th>Matière(s) enseignée(s)</th>
-				<th>Date De Naissance</th>
-				<th>E-mail</th>
-				<th>Num Portable</th>
+				<th>Matière(s) enseignée(s)</th><th>E-mail</th><th>Num Portable</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr class="row">
-				<td>Mathématiques & Physique</td>
-				<td>10/01/1947</td>
-				<td>realgangsta@shutup.com</td>
-				<td>012344321</td>
+				<?php 
+					$idProf = 11111116;
+					$info = $m->recuperer_infoProf($idProf);
+					foreach ($info as $if){
+						echo '<td>' . $if['InscriptionMatiere'] . '</td><td>' . $if['Mail'] . '</td><td>' . $if['Téléphone'] . '</td>';
+					}?>
 			</tr>
 		</tbody>
 	</table>
-		<h2>PROMOTION ACTIVE</h2>
+		<h2><a href="#">PROMOTION ACTIVE</a></h2>
 	</div>
 
 		<!-------------------------------TAB PROMO ACTIVE------------------------------------>
 		<div class="tabpromo">
 			<table>
-			<tr><th>Année</th><th>Nombre d'élèves</th><th>DAEU : </th><th>Nombre d'heure de cours</th></tr>
-				<tr><td><a href="#">2020-2021</a></td><td>30</td><td>DAEU A</td><td>13H</td></tr>
-				<tr><td><a href="#">2020-2021</a></td><td>23</td><td>DAEU B</td><td>16H</td></tr>
-
+			<tr><th>Date début</th><th>Date fin</th><th>DAEU options</th><th>Nom de la promotion</th><th>Matières</th></tr>
+				<?php 
+					$newProm= $m->recuperer_infoPromoNew();
+					foreach ($newProm as $new){
+						echo '<tr><td>' . $new['DateDebut'] . '</td><td>' . $new['DateFin'] . '</td><td>' . $new['Option'] . '</td><td><a href="#">' . $new['NomPromo'] . '</a></td><td>' . $new['matieres'] . '</td></tr>';
+					}?>
 			</table>
 		</div>
 		<!------------------------------------------------------------------------------------>
 	   
 		<!--------------------------------TAP ANCIENNE PROMO---------------------------------->
-		<h2>ANCIENNE PROMO </h2>
+		<h2><a href="#">ANCIENNE PROMO </a></h2>
 		<div class="tabpromo">
 			<div class="scroll">
 			<table class="tabB">
-			<tr><th>Année</th><th>Nombre d'élèves</th><th>DAEU : </th></tr>
-				<tr><td><a href="#">2019-2020</a></td><td>32</td><td>DAEU A</td></tr>
-				<tr><td><a href="#">2019-2020</a></td><td>27</td><td>DAEU B</td></tr>
-				<tr><td><a href="#">2018-2019</a></td><td>26</td><td>DAEU A</td></tr>
-				<tr><td><a href="#">2018-2019</a></td><td>24</td><td>DAEU B</td></tr>
-				<tr><td><a href="#">2017-2018</a></td><td>30</td><td>DAEU A</td></tr>
-				<tr><td><a href="#">2017-2018</a></td><td>30</td><td>DAEU B</td></tr>
-				<tr><td><a href="#">2016-2017</a></td><td>28</td><td>DAEU A</td></tr>
-				<tr><td><a href="#">2016-2017</a></td><td>23</td><td>DAEU B</td></tr>
+			<tr><th>Date début</th><th>Date fin</th><th>DAEUOptions</th><th>Nom de la promotion</th><th>Matières</th></tr>
+							<?php 
+									$oldProm= $m->lespromoAnciennes();
+									foreach ($oldProm as $new){
+										echo '<tr><td>' . $new['DateDebut'] . '</td><td>' . $new['DateFin'] . '</td><td>' . $new['Option'] . '</td><td><a href="#">' . $new['NomPromo'] .'</a></td><td>' . $new['matieres'] . '</td></tr>';
+									}?>
 			</table>
 			</div>
 		</div>
 		<!------------------------------------------------------------------------------------>
 <?php
-require "../general/fin.html";
+require "../general/fin.php";
 ?>
-    <!-------------------------------------------CODE PAGE ACCUEIL PROF------------------------------------------------------>    

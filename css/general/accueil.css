@@ -5,17 +5,54 @@ Syages©®
 @date : 10/10/2020;
 */
 
-.wrapper .body .melbanner {
+.wrapper .body .tababs{
+    display: flex;
+    overflow-x:scroll;
+    overflow-y: visible;
+    width:auto;
+    margin-bottom: 12px;
+}
+
+.wrapper .body .tababs table td,.wrapper .body .tab table td{
+    text-align: center;
+}
+.wrapper .body .tababs table,.wrapper .body .tab table{
+    border-collapse: collapse;
+
+}
+
+.wrapper .body .tababs table tr,td,th,.wrapper .body .tab table td,tr,th{
+  border : 2px solid white;
+}
+
+.wrapper .body .tababs table tr:hover td,.wrapper .body .tab table tr:hover td{
+    background-color: rgba(100,100,255,0.6);
+    color:goldenrod
+}
+.wrapper .body .tababs table th,.wrapper .body .tab table th{
+    background-color:rgba(100,100,255,0.6);
+}
+
+.wrapper .body .tababs table td,tr,th,.wrapper .body .tab table td,tr,th{padding:10px;}
+
+.wrapper .body .tababs tab tr,.wrapper .body .tab table tr{
+    margin: auto;
+}
+
+
+.wrapper .body .melbanner{
     display: flex;
     overflow: hidden;
+    align-content: space-between;
     height: 75px;
     margin-bottom: 30px;
     margin-top: 10px;
+    width:100%;
 }
 
 .wrapper .body .melbanner #logo{
     /*530 × 435*/
-    display:inline-flex; 
+    display:inline-flex;
     overflow: hidden;
     width:132px;
     height: 106px;
@@ -27,57 +64,20 @@ Syages©®
     margin-bottom: auto;
     width:50px;
     border-radius: 200px;
-    
-}
-.wrapper .body .melbanner #searchbar{ 
-    width:40%;
-    margin-left: auto;
-    margin-top:08px;
-    height: 43px;
-    color:white;
-    background-color: black;
-    
+
 }
 
-.wrapper .body .melbanner #searchbar:hover{
-    background-color: white;
-    color:black;
-}
-
-.wrapper .body .melbanner #submitbutton{
-    height: 40px;
-    margin-left:2px;
-    width:90px;
-    border : 1px solid white;
-    background-color: rgba(0,0,0);
-    color: white;
-}
-
-.wrapper .body .melbanner #submitbutton:hover{
-    height: 40px;
-    margin-left:2px;
-    width:90px;
-    border : 1px solid white;
-    background-color: rgba(255,255,1);
-    color: black;
-}
-
-#submitbutton{
-    margin-top: 10px;
-    height: 100px;
-    color:black;
-}
 .nav_bar{
-    background-color: rgba(18,18,23,0.8); 
+    background-color: rgba(18,18,23,0.8);
     padding-top: 10px;
-    
+
 }
 
 .wrapper .nav_bar ul li a img{
    width:30px;
     margin-top:2px;
     justify-content: center;
-    
+
 }
 .wrapper .nav_bar h3{
     padding: 12px;
@@ -91,7 +91,7 @@ Syages©®
     width:100%;
     border-bottom: 1px solid rgba(0,0,0,0.05);
     border-top: 1px solid rgba(255,255,255,0.05);
-    
+
 }
 .wrapper .nav_bar ul{
     width:100%;
@@ -99,20 +99,131 @@ Syages©®
 
 .wrapper .nav_bar ul li:hover{
     background: rgba(100,100,255,0.8);
-    
+
 }
 
 .wrapper .nav_bar ul li a{
     color : rgba(255,255,255,0.8);
     display: block;
-    text-align:left;   
+    text-align:left;
+}
+
+.wrapper .body .tababs .form-conteneur{
+    margin:5%;
+    color : black;
+    width:auto;
+    padding-left:20px;
+
+}
+
+.wrapper .body .tababs .form-conteneur form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 2px solid white;
+}
+
+.wrapper .body .tababs .form-conteneur form h2,.wrapper .body .tababs .form-conteneur form h3 {
+    padding:5px ;
+    width:100%;
+    background-color: rgba(100,100,255,0.8);
+
+}
+
+.wrapper .body .tababs .form-conteneur form p{
+    font-weight: 600px;
+    padding: 12px;
+}
+
+.wrapper .body .tababs .form-conteneur form input, .wrapper .body .tababs .form-conteneur form select{
+    height:25px;
+    margin: 12px;
+    padding: 10px 15px 10px;
+    color:white;
+    background-color: rgba(100,100,100,0.2);
+    border-radius: 5px;
+    width:90%;
+}
+
+.wrapper .body .tababs .form-conteneur form #btn{
+
+    width:90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    height: 40px;
+    color:white;
+    border:1px solid white;
+    text-transform: uppercase;
+
+}
+
+
+
+/*move l'input submit*/
+.wrapper .body .tababs .form-conteneur form #btn:hover{
+
+   transform:scale(1.03);
+    -webkit-transform:scale(1.03);
+    -moz-transform:scale(1.03);
+    -ms-transform:scale(1.03);
+    -o-transform:scale(1.03);
+    box-shadow: 1px 1px 1px rgba(255,255,255,.8);
+
+}
+/*TEST DEBUT*/
+.wrapper .body .tababs .form-conteneur form #btn{
+    width: auto;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+  color:white;
+    border:3px solid white;
+    height: 10%;
+}
+
+
+.wrapper .body .tababs .form-conteneur form #btn:hover{
+  padding-right: 25px;
+    background-color:deepskyblue;
+
+}
+/*TEST FIN*/
+
+.wrapper .body .tababs .form-conteneur form .champ-formulaire{
+    display: flex;
+    justify-content: space-between;
+    height: 20px;
+    margin:20px;
+}
+
+
+.wrapper .body .tababs .form-conteneur form #nom,.wrapper .body .tababs .form-conteneur form #prenom{
+    width:77%;
+}
+
+.wrapper .body .tababs .form-conteneur form #date-debut{
+    width:40%;
+    margin-left:4%;
+}
+
+.wrapper .body .tababs .form-conteneur form #temps-debut,.wrapper .body .tababs .form-conteneur form #temps-fin{
+    width:30%;
+}
+.wrapper .body .tababs .form-conteneur form #date-fin{
+    width:40%;
+    margin-left: 08%
 }
 
 @media only and screen (max-width:800px){
     *{
         font-size:12px;
     }
-    .wrapper .body .melbanner #searchbar{ 
+    .wrapper .body .tababs .form-conteneur form .champ-formulaire label{
+        font-size:10px;
+    }
+    .wrapper .body .melbanner #searchbar{
     width:100%;
     margin-left:20px;
     margin-top:10px;
@@ -120,7 +231,7 @@ Syages©®
     color:white;
     background-color: rgba(105,105,105,0.3);
     border:1px solid white;
-    
+
 }
 }
 .wrapper .body .mes-infos{
@@ -137,7 +248,7 @@ Syages©®
     padding-top: 22px;
     background-color: rgba(100,100,255,0.8);
     border:1px solid white;
-    
+
 }
 
 .wrapper .body .mes-infos .infos-images{
@@ -145,7 +256,7 @@ Syages©®
     flex:.5;
     display: flex;
     justify-content: center
-    
+
 }
 
 .wrapper .body .mes-infos .infos-images img{
@@ -159,7 +270,7 @@ Syages©®
     border : 1px solid white;
     flex: 1;
     display:flex;
-    
+
 }
 
 .wrapper .body .mes-infos .infos-text .table{
@@ -169,6 +280,5 @@ Syages©®
 
 .wrapper .body .mes-infos .infos-text .table #champs-infos{
     width: 100%;
+
 }
-input.icone { width: 16px; }
-.sansBordure { border : 0px; width : 30px; padding-left : 0px;}

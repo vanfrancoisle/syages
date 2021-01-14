@@ -1,10 +1,10 @@
 <?php
 $title='Information sur la promotion';
-require '../debut.php';
+require 'debut.php';
 echo '<link rel="stylesheet" type="text/css" href="/css/general/InfoPromotionNew.css">';  /*mettre le css qui vous est particulier pas le css general qui est deja défini dans le début.php*/
-require '../debut-2.php';
+require 'debut-2.php';
 $h3='Information sur la promotion';
-require '../navbanner-secretaire.php'; 
+require 'navbanner-secretaire.php'; 
 
 ?>
 
@@ -13,6 +13,9 @@ session_start();
 $_SESSION["role"]="s";
 $_SESSION["idUser"]="11111113";
 $_SESSION["idPromotion"]="120212";
+//Logs
+$texte = "\n".date("d-m-Y")."|";
+file_put_contents('log.txt', $texte."Consulter Promotion actuelle|".$_SESSION["idUser"]."|Page promotion ".$_SESSION["idPromotion"],FILE_APPEND);
 ?>
 
         <div class="body" id="body">
@@ -25,7 +28,7 @@ $_SESSION["idPromotion"]="120212";
 
             <div class=contenu>
                 <?php 
-                require '../BDDsyages.php';
+                require 'BDDsyages.php';
                 if($_SESSION["role"]=="p"){
                     $bd = BDDsyages::getBddsyages(2);
                 }
@@ -38,11 +41,19 @@ $_SESSION["idPromotion"]="120212";
                 }
                 if($_SESSION["role"]=="p"){
 
-                    $tab= $bd->matiere_enseignee($_SESSION["idUser"]);
-                    echo '<h3>Ma matière : ';
+                    $tab= $bd->matiere_enseignee($_SESSION["idUser"],$_SESSION["idPromotion"]);
+                    $nbMatiere = count($tab);
+                    if ($nbMatiere>=2){
+                        echo "<h3>Mes matieres : ";
+                    } else {
+                        echo '<h3>Ma matière : ';
+                    }
                     foreach ($tab as $key => $value) {
 
                         echo '<form class="form_inline" action="gestion_controle.php" method="POST" ><input type="hidden" name="matiere" value="'.$value.'"/></form>'."<a href='#' onclick='document.getElementById(\"".$value."\").submit()'>$value</a>";
+                        if ($key<$nbMatiere-1){
+                            echo ", ";
+                        }
                         #header("Location: ");
                     } 
 
@@ -55,7 +66,7 @@ $_SESSION["idPromotion"]="120212";
                     <div class="tab">
                
                         <table>
-                            <tr><th>Matière</th><th>Professeurs</th><th>Inscrits</th><th>Evaluations</th><th>Moyenne générale</th>
+                            <tr><th>Matière</th><th class=width20>Professeurs</th><th>Inscrits</th><th>Evaluations</th><th>Moyenne générale</th>
 
                                 <?php if (isset($_SESSION["role"])){
                                     if ($_SESSION["role"]=="s"){
@@ -64,26 +75,12 @@ $_SESSION["idPromotion"]="120212";
                                 }
                                 ?></tr>
 
-
-
                             <?php
                                 if ($_SESSION["role"]=="p" or $_SESSION["role"]=="s"){
 
-                                    $matiere=$bd->get_matiere($_SESSION["idPromotion"]);
-                                    $touslespromo= $bd->lespromoActuelles();
-
-                                    foreach ($touslespromo as $key => $value) { // On prends les matieres obligatoires
-                                        if ($value["idPromotion"]==$_SESSION["idPromotion"]){
-                                            $matieres["obligatoire"]=explode("; " ,ucwords($value["matieres"]," "));
-                                        }
-                                    }
-
-                                    foreach ($matiere as $key => $value) { // On ajoute les matieres optionnelles
-                                        if (!in_array($value,$matieres["obligatoire"])){
-                                            $matieres["optionnelle"][$key]=$value;
-                                        }
-                                    }
-
+                                    $matieres["obligatoire"]=$bd->get_matieresObligatoires($_SESSION["idPromotion"]);
+                                    $matieres["optionnelle"]=$bd->get_matieresOptionnelles($_SESSION["idPromotion"]);
+                                    
                                     foreach ($matieres as $key => $value) {
                                         if ($key=="obligatoire"){
                                             echo '<tr><td>Obligatoire :</td><td colspan="7"></td></tr>';
@@ -91,7 +88,7 @@ $_SESSION["idPromotion"]="120212";
                                             echo '<tr><td>Optionnel :</td><td colspan="7"></td></tr>';
                                         }
                                         foreach ($value as $key2 => $value2) {
-                                            echo '<tr><td><a href="#">'.$value2.'</a></td><td>'.implode("</br>",$bd->get_professeur_promo($_SESSION["idPromotion"],trim($value2))).'</a></td><td>'.$bd->get_nbEleveMatiere($_SESSION["idPromotion"],$value2)[0].'</td><td>';
+                                            echo '<tr><td><a href="#">'.$value2.'</a></td><td>'.implode(",</br>",$bd->get_professeur_promo($_SESSION["idPromotion"],trim($value2))).'</td><td>'.$bd->get_nbEleveMatiere($_SESSION["idPromotion"],$value2)[0].'</td><td>';
 
                                             if ($bd->get_evaluation($_SESSION["idPromotion"],$value2)[0]!=false){
                                                 echo $bd->get_evaluation($_SESSION["idPromotion"],$value2)[0].' en cours</td><td>';
@@ -106,14 +103,10 @@ $_SESSION["idPromotion"]="120212";
                                         }
                                     }   
                                 }
-                                
-
                             ?>
                         </table>
                     </div>
 
-
-                    
                     <div id=liens>
                         <div id="wrapper2">
                             <div id="container_wrapper2">
@@ -166,6 +159,4 @@ $_SESSION["idPromotion"]="120212";
 
             </div>
 
-
-
-<?php  require '../fin.php' ; ?>
+<?php  require 'fin.php' ; ?>
