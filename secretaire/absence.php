@@ -50,6 +50,8 @@ ABSENCES PROMOTION DAEU 2020/2021</h1>
 
 			//echo 'les nombre d\'abs dans la bdd au total est : '.count($tab);
 			//echo 'les personnes \'abs sont au nombre de : '.count($les_personnes_abs );
+			//TEST
+
 			foreach($les_personnes_absJustif as $cle => $abs){
 				$nomPremonIdUser = $m->nom_prenom_user(intval($abs["idUser"]));
 				//var_dump($abs);
