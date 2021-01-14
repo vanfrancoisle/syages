@@ -1,5 +1,12 @@
+
+/*
+Syages©®
+@author : inthragith;
+@version : 1.0;
+@date : 10/10/2020;
+*/
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
 *{
     margin:0px;
     padding:0px;
@@ -8,7 +15,8 @@
     text-decoration: none;
     font-family: "Source Sans Pro",sans-serif;
     color:white;
-	text-align: center;	
+    font-size:19px;
+    letter-spacing: 1px;
 }
 
 .wrapper .nav_bar #logo{
@@ -17,19 +25,23 @@
     height:33px;
     margin: 12px;
 }
+
 .wrapper .nav_bar #btn-menu{
     height:50px;
     width: 50px;
     border-radius:10px;
     margin-right: 12px;
-    background-color:rgba(0,0,0,0.0);   
+    background-color:rgba(18,18,23,0.8);
+
 }
 
 .wrapper .body .melbanner #btn-menu1{
     height:50px;
     width: 50px;
     border-radius:10px;
-    background-color:rgba(0,0,0,0.0);  
+    background-color:rgba(0,0,0,0.0);
+
+
 }
 
 .wrapper .body .melbanner #btn-menu1.okmenu{
@@ -38,18 +50,21 @@
     border-radius:10px;
     background-color:rgba(0,0,0,0.0);
     display:none;
+
 }
 
 body{
-    background: #565656;
+    background-color: rgba(25,50,75,1);
+    display:inline-flex;
     overflow-y: scroll;
-	width:100%;
+    overflow-x:visible;
+    width:100%;
 }
 
 .wrapper{
     display:flex;
     overflow: hidden;
-    position:relative; 
+    position:relative;
     width:100%;
 }
 
@@ -57,7 +72,7 @@ body{
     position:fixed;
     height: 100%;
     width: 250px;
-    display: initial;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     overflow: hidden;
@@ -69,10 +84,10 @@ body{
     position:fixed;
     height: 100%;
     width: 250px;
-    display: initial;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    overflow: hidden;
+    overflow: scroll;
     justify-content:space-between;
 }
 
@@ -93,10 +108,11 @@ body{
 .wrapper .body{
     height: 100%;
     width:100%;
-	background-color: black;
+    background-color: black;
     padding-left: 12px;
     padding-right:12px;
-	
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -104,7 +120,6 @@ body{
 .wrapper .body.yesmenu{
     height: 100%;
     margin-left: 250px;
-    background-color: black;
     padding-left: 12px;
     padding-right:12px;
 }

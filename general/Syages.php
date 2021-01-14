@@ -2,37 +2,46 @@
 /*
 @author : inthragith, aymane
 */
-require 'Utils/functions.php';
+require '../Utils/functions.php';
 class Syages{
 
   private static $instance =null;
   private $bd;
+  private $session;
 
-  private function __construct($entier){
-    if(!((bool)entier)){
-      $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'juste',     'pourlaconnecxtion');
-    }
+  private function __construct($login,$mdp){
+      $this->bd = new PDO('mysql:host=localhost;dbname=SYAGES', 'juste','pourlaconnecxtion');
 
-     else if($entier==1){
-          $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'eleve',     'eleve');
+      $req = $this->bd->prepare('SELECT idUser,MotDePasse,Role from users where idUser= :idUser');
+      $req->bindValue(':idUser', $login);
+      $req->execute();
+      $user = $req->fetchAll(PDO::FETCH_ASSOC);
+      if(isset($user[0]) && password_verify($mdp,$user[0]["MotDePasse"])){
+        if($user[0]["Role"]="e"){
+          $this->bd = new PDO('mysql:host=localhost;dbname=Syages', 'eleve',     'eleve');
+        }
+        if($user[0]["Role"]="p"){
+          $this->bd = new PDO('mysql:host=localhost;dbname=Syages', 'professeur',     'professeur');
+        }
+        if($user[0]["Role"]="s"){
+          $this->bd = new PDO('mysql:host=localhost;dbname=Syages', 'secretaire',     'secretaire');
+        }
+        if($user[0]["Role"]="a"){
+          $this->bd = new PDO('mysql:host=localhost;dbname=Syages', 'admin',     'admin');
+        }
+      }else{
+        $this->session = 0;
       }
-
-    else if($entier==2){
-        $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'professeur', 'professeur');
-    }
-
-    else if($entier==3){
-        $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'secretaire', 'secretaire');
-    }
-
-    else if($entier==4){
-        $this->bd = new PDO('mysql:host=192.168.64.2;dbname=SYAGES', 'administrateur', 'administrateur');
-  }
+      $this->session = $user[0];
+      var_dump($user[0]);
 
     $this->bd->query("SET NAMES 'utf8'");
 
     $this->bd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
+  }
+  public function getSession(){
+    return $this->session;
   }
 
 
@@ -60,13 +69,20 @@ class Syages{
 
 
   public function getNotes($idUser){
-    $req = $this->bd->prepare('SELECT * from eval where idUser= :idUser');
+    $req = $this->bd->prepare('SELECT * from eval where idUser= :idUser group by numEval');
     $req->bindValue(':idUser', $idUser);
     $req->execute();
 
     return $req->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  public function getNotesGroup($idEval){
+    $req = $this->bd->prepare('SELECT AVG(Note),numEval,idPromo from eval where idUser= :idUser group by numEval');
+    $req->bindValue(':idEval', $idEval);
+    $req->execute();
+
+    return $req->fetchAll(PDO::FETCH_ASSOC);
+  }
 
   public function nomMatiere($idMatiere){
       $req = $this->bd->prepare('SELECT Nom from matiere where idMatiere= :idMatiere');
@@ -241,10 +257,10 @@ public function getEtablissements(){
   /**
     * Méthode permettant de récupérer l'instance de la classe Model
   */
-  public static function getModel($int) {
+  public static function getModel($login,$mdp) {
       //Si la classe n'a pas encore été instanciée
   if (self::$instance === null) {
-  self::$instance = new self($int); //On l'instancie
+  self::$instance = new self($login,$mdp); //On l'instancie
   }
   return self::$instance; //On retourne l'instance
 
