@@ -210,6 +210,9 @@ class Bddsyages{
         return $requetePromo->fetch(PDO::FETCH_ASSOC)['Option'];
     }
 
+// -------------------------------------------------------------------------------------------------------------------------------------
+
+
 	public function les_absences(){
         $requeteAbs = $this->bd->prepare("SELECT * FROM absenceretard;");
 		$requeteAbs->execute();
@@ -218,26 +221,38 @@ class Bddsyages{
 	
 	public function les_absences_par_personnes(){
         $requeteAbs = $this->bd->prepare("SELECT idUser, count(*) as nbAbs FROM absenceretard GROUP BY idUser;");
-		// c'est GROUP BY idUser qui te donne le nbAbs par personne ok ! ok !
+		// c'est GROUP BY idUser qui  donne le nbAbs par personne 
 		$requeteAbs->execute();
         return $requeteAbs->fetchALL(PDO::FETCH_ASSOC);
     }
+	
 	public function les_nbAbs_justif_par_personnes(){
         $requeteAbs = $this->bd->prepare("SELECT idUser, count(*) as nbAbsJustif FROM absenceretard WHERE justif=1 GROUP BY idUser;");
-		// c'est GROUP BY idUser qui te donne le nbAbs par personne ok !
-		$requeteAbs->execute();
-        return $requeteAbs->fetchALL(PDO::FETCH_ASSOC);
-    }
-	// on fait une jointure des deux tables ok !! les NbAbs et les Justifieés ok !!!!!!!
-	
-	public function les_abs_par_perso_JNJ(){
-		// SELECT table1111.id,table111.aval1,table113.cval1 FROM table111 INNER JOIN table113 ON table111.id=table113.id;
-        $requeteAbs = $this->bd->prepare("SELECT idUser, nbAbsJustif, nbAbs FROM ((SELECT idUser, count(*) as nbAbsJustif FROM absenceretard WHERE justif=1 GROUP BY idUser) NATURAL JOIN (SELECT idUser, count(*) as nbAbs FROM absenceretard GROUP BY idUser)) ;");
-		// c'est GROUP BY idUser qui te donne le nbAbs par personne ok !
+		// c'est GROUP BY idUser qui  donne le nbAbs par personne 
 		$requeteAbs->execute();
         return $requeteAbs->fetchALL(PDO::FETCH_ASSOC);
     }
 	
+	 // Nombre Absence justifiées et Nombre Absences Non Justifieés
+public function les_nbAbs_justif_par_personnes($idUser){
+    $requeteAbs = $this->bd->prepare("SELECT COUNT(*) as nbAbs FROM absenceretard WHERE idUser = :id AND justif = 1; ");
+    $requeteAbs->bindValue('id',$idUser);
+    $requeteAbs->execute();
+    return $requeteAbs->fetch(PDO::FETCH_ASSOC)['nbAbs'];
+}
+*/
+
+public function les_nbAbs_nonjustifier_par_personnes($idUser){
+    $requeteAbs = $this->bd->prepare("SELECT COUNT(*) as nbAbs FROM absenceretard WHERE idUser = :id AND justif = 0; ");
+    $requeteAbs->bindValue('id',$idUser);
+    $requeteAbs->execute();
+    return $requeteAbs->fetch(PDO::FETCH_ASSOC)['nbAbs'];
+}
+	
+	
+   // -------------------------------------------------------------------------------------------------------------------------------------
+
+
 	public function recuperer_tout_controle_etuds($id){
 		$req= $this->bd->prepare( 'SELECT *, matiere.Nom from eval,matiere where matiere.idMatiere = eval.idMatiere AND eval.idUser= :id AND Note>=0;');
 		$req->bindValue(':id', $id);
