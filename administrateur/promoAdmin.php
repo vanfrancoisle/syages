@@ -10,6 +10,11 @@ require '../navbanner-admin.php';
 
 <?php
 require '../BDDsyages.php';
+session_start();
+/*
+$_SESSION["role"]="a";
+$_SESSION["idUser"]=1;
+*/
 if(isset($_SESSION["role"]) and isset($_SESSION["idUser"]) and $_SESSION["role"]=="a"){
     $bd = BDDsyages::getBddsyages(4);
 } else {
