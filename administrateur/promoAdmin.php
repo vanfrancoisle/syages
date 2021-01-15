@@ -13,7 +13,7 @@ require '../BDDsyages.php';
 session_start();
 /*
 $_SESSION["role"]="a";
-$_SESSION["idUser"]=1;
+$_SESSION["idUser"]=12;
 */
 if(isset($_SESSION["role"]) and isset($_SESSION["idUser"]) and $_SESSION["role"]=="a"){
     $bd = BDDsyages::getBddsyages(4);
