@@ -1,16 +1,22 @@
 <?php
 $title='Les promotions anciennes';
-require 'debut.php';
+require '../debut.php';
 echo '<link rel="stylesheet" type="text/css" href="/css/general/InfoPromotionAncienne.css">';
-require 'debut-2.php';
+require '../debut-2.php';
 $h3='Les promotions anciennes';
-require 'navbanner-secretaire.php'; ?>
+require '../navbanner-secretaire.php'; ?>
 
 <?php 
 session_start();
+/*
 $_SESSION["role"]="s";
 $_SESSION["idUser"]="11111113";
+*/
 //Logs
+if(!isset($_SESSION["role"]) and !isset($_SESSION["idUser"]) or $_SESSION["role"]=="e"){
+    header('Location: connexion.php');
+}
+
 $texte = "\n".date("d-m-Y")."|";
 file_put_contents('log.txt', $texte."Consulter promotion ancienne|".$_SESSION["idUser"]."|Page infoPromotionAncienne",FILE_APPEND);
 ?>
@@ -32,7 +38,7 @@ file_put_contents('log.txt', $texte."Consulter promotion ancienne|".$_SESSION["i
                             <tr><th>Date de début</th><th>Date de fin</th><th>Nom de la promotion</th><th>Inscrits</th><th>Validé</th><th>Echec</th><th>Moyenne générale</th></tr>
 
                             <?php 
-                                require 'BDDsyages.php';
+                                require '../BDDsyages.php';
                                 if($_SESSION["role"]=="p" or $_SESSION["role"]=="s"){
                                     $bd = BDDsyages::getBddsyages(2);
 
@@ -59,4 +65,4 @@ file_put_contents('log.txt', $texte."Consulter promotion ancienne|".$_SESSION["i
                     </div>
             </div>
 
-<?php  require 'fin.php' ; ?>
+<?php  require '../fin.php' ; ?>

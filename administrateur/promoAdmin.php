@@ -1,23 +1,19 @@
 <?php
 $title='Informations promotions';
-require '../general/debut.php';
+require '../debut.php';
 echo '<link rel="stylesheet" type="text/css" href="/css/administrateur/promoAdmin.css">';
-require '../general/debut-2.php';
-$h3='Gérer les promotions';
-require '../general/navbanner-admin.php'; 
+require '../debut-2.php';
+$h3='title';
+require '../navbanner-admin.php'; 
 
 ?>
 
 <?php
-//A supprimer
-$_SESSION["role"]="a";
-$_SESSION["idEtablissement"]=1;
-$_SESSION["idUser"]=1;
-//
-
-require '../general/BDDsyages.php';
-if($_SESSION["role"]=="a"){
+require '../BDDsyages.php';
+if(isset($_SESSION["role"]) and isset($_SESSION["idUser"]) and $_SESSION["role"]=="a"){
     $bd = BDDsyages::getBddsyages(4);
+} else {
+	header('Location: ../general/connexion.php');
 }
 
 ?>
@@ -324,4 +320,4 @@ function verif(){
 			</div>
             <footer></footer>
 
-<?php  require '../general/fin.php' ; ?>
+<?php  require '../fin.php' ; ?>
