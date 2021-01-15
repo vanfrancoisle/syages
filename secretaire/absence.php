@@ -1,21 +1,17 @@
 <?php
 $title='Absence General';
-require '../debut.php';
+require '../general/debut.php';
 echo '<link rel="stylesheet" type="text/css" href="/css/secretaire/style_absence">';  /*mettre le css qui vous est particulier pas le css general qui est deja défini dans le début.php*/
-require '../debut-2.php';
+require '../general/debut-2.php';
 $h3='Menu secrétaire';
 
-require "../navbanner-secretaire.php";  
-
-require_once "../Bddsyages.php";
-
-$m = Bddsyages::getBddsyages(2);
-
+require "../general/navbanner-secretaire.php"; 
 ?>
 
 
 
-        <div class="body" id="body">
+
+<div class="body" id="body">
             <div class="melbanner">
         <button id="btn-menu1" onclick="show_hide()"><img src="/img/menu.png" id="menu"></button>
                 <img src="/img/logo.png" id="logo"/>
@@ -35,39 +31,74 @@ ABSENCES PROMOTION DAEU 2020/2021</h1>
             <center>            
              
             <table>
-			<tr><th>Nom Etudiant</th><th>Prenom Etudiant</th><th>Nombres absences deélèves</th><th>Nombres Absences Justifiées</th><th>Nombres Absences Non justifiée</th> <th> Détails</th></tr>
+      <tr><th>Nom Etudiant</th><th>Prenom Etudiant</th><th>Nombres absences deélèves</th><th>Nombres Absences Justifiées</th><th>Nombres Absences Non justifiée</th> <th> Détails</th></tr>
 
-            <?php
-			$tab = $m->les_absences();
 
-			$les_personnes_abs = $m->les_absences_par_personnes();
-			$les_personnes_absJustif = $m->les_nbAbs_justif_par_personnes();
-			$les_absJNJ = $m->les_abs_par_perso_JNJ();
-			//echo 'nbAbsJ = '.count($les_personnes_absJustif).' et nbAbsG = '.count($les_personnes_abs; // parfait sont == on peut faire la jointure !! ok!!!!!
-			//var_dump($les_personnes_abs);
-			//var_dump($les_personnes_abs);
-			//var_dump($les_absJNJ);
 
-			//echo 'les nombre d\'abs dans la bdd au total est : '.count($tab);
-			//echo 'les personnes \'abs sont au nombre de : '.count($les_personnes_abs );
-			foreach($les_personnes_absJustif as $cle => $abs){
-				$nomPremonIdUser = $m->nom_prenom_user(intval($abs["idUser"]));
-				//var_dump($abs);
-				echo '<tr class ="bg"><td><B>'.$nomPremonIdUser["Nom"].'</B></td><td><B>'.$nomPremonIdUser["Prénom"].'</B></td><td> <B>'.intval($abs["nbAbsJustif"]).'</td><td><B>'.intval($abs["nbAbsJustif"]).'</B></td><td><B>1</td></B> <td> <button> <a href="absence2.html"> Cliquez ici !</a></button> </td></td> </tr>';
-			}
-			//var_dump($les_personnes_abs);
-			// regarde je fais au total !! 
-			// parceque tout à l'heure j'ai ajouté des personnes qui sont abs, donc ça augmente leur nombre d'abs !! ok 
-			// le les_personnes_abs a 5 abs, le 11111118 a 4, le reste ils ont 1 ok !
-			// c'est bon ??
-			// on fait Nombres Absences Justifiées ok !!
-			?>
-			
-  
-            </table>
+
+
+<?php
+// CONNECXION A LA BDD
+try{
+   $bdd = new PDO('mysql:host=localhost; dbname=bddsyages;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        }
+        catch(Exception $e){
+            die("Message". $e.getMessage());
+        }
+
+// NOM ET PRENOM 
+    
+$req1 = $bdd->query('SELECT Nom, Prénom, idUser FROM users');
+
+       while ($donnees = $req1->fetch()){
+        echo '<tr class ="bg"><td><B>'. $donnees['Nom']. '</B></td>  <td><B>' . $donnees['Prénom'] . '</B></td><td>';
+        
+        
+// ABSENCE TOTAL 
+
+        $req2=$bdd->prepare('SELECT COUNT(*) FROM absenceretard WHERE idUser LIKE :idutilisateur ');
+
+        $req2->execute(array('idutilisateur'=>strval($donnees['idUser'])));
+       
+       while ($donnees2 = $req2->fetch()){
+        echo  $donnees2['COUNT(*)'] ;
+        
+        $abs_Total = $donnees2['COUNT(*)'];
+       }
+
+
+// ABSENCE JUSTIFIER 
+
+$req3=$bdd->prepare('SELECT COUNT(*) FROM absenceretard WHERE idUser LIKE :idutilisateur AND Justif=1 ');
+      
+        $req3->execute(array('idutilisateur'=>strval($donnees['idUser'])));
+       
+       while ($donnees3 = $req3->fetch()){
+        echo  '<td><B>'. $donnees3['COUNT(*)'];
+        
+        $abs_Jutify = $donnees3['COUNT(*)'];
+       }
+       $abs_No_justify = $abs_Total - $abs_Jutify;
+       echo  '<td><B>' .$abs_No_justify . '<td>  <a href="/syages/secretaire/absence2.html"> <B> Cliquez ici</B> </a></button>'  ;
+
+
+        echo '<br/>';
+        echo '<br/>';
+            
+            }
+            ?>
+
+
+
+
+        </table>
             
             </center>
               </div>
               </div>
 
-<?php  require '../fin.php' ; ?>
+    
+
+
+    <?php require '../general/fin.php' ; ?>
+    

@@ -19,7 +19,7 @@ $m = Bddsyages::getBddsyages(2);
 </div>
 
 
-<center><h1>Detail de l'absence </h1><br/></center>
+<center><h1>Detail de l'absence </h1><br/>
 <?php
 $eleve = 11111116;
 $nomPrenomIdUser = $m->nom_prenom_user($eleve);
@@ -39,27 +39,26 @@ echo '<p> Promo : '.$nomPromo;
 echo '<p> Nombre d\'absence total : '.count($lesabsdeId);
 echo '<p> Nombre d\'absence Justifiée : '.$nbabsj;
 ?>
-       <div class="tababs">
-           <div class="tab">
-                        
+       </center>
+             <div class="abc">    
             <table>
-			<tr class ="bg"><th class ="bg">Date Debut</th><th class ="bg">Heure</th><th class ="bg">Cours Manque</th><th class ="bg">Etat</th> <th class ="bg"> Motif de l'absence</th></tr>
+			<tr class ="bg"><th class ="bg">Date Debut</th><th class ="bg">Heure</th><th class ="bg">Etat</th> <th class ="bg"> Motif de l'absence</th></tr>
 
              <?php
-			 // je fais un test avec le user 11111116 !! ok !
+			 // je fais un test avec le user 11111116 !! 
 			 // parcontre cours manqué on l'a pas dans la bdd
-			 // sur ta page on sait pas c'est qui donc ont mets nom et prénom 
+			 // sur la page on sait pas c'est qui donc ont mets nom et prénom 
 			foreach($lesabsdeId as $abs){
 				$dateHeure=explode(' ',$abs['Datetheure']);
 				$date= $dateHeure[0];
 				$heure=explode(":",$dateHeure[1])[0];
 				$justif=$abs['Justif']== 1 ? "Justifiée" : " non Justifiée";
 				//var_dump($justif);
-				echo '<tr class ="bg"><td><B>'.$date.'</B></td><td><B>'.$heure.'h</B></td><<td> <B>Gestion</td><td><B>'.$justif.'</td></B> <td> '.$abs['Data'].'</td></td> </tr>';
+				echo '<tr class ="bg"><td><B>'.$date.'</B></td><td><B>'.$heure.'h</B></td><td><B>'.$justif.'</td></B> <td> '.$abs['Data'].'</td></td> </tr>';
 			}
 			?>
                 </table>
-
+			</div>
 
                   </div>
                   </div>

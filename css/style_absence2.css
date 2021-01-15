@@ -44,6 +44,10 @@ button{
     
 
 }
+.bg {
+    width: 100%;
+}
+
 .bg:hover{
     
     color:red;

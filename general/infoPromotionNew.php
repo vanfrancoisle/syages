@@ -1,10 +1,10 @@
 <?php
 $title='Information sur la promotion';
-require '../debut.php';
+require 'debut.php';
 echo '<link rel="stylesheet" type="text/css" href="/css/general/InfoPromotionNew.css">';  /*mettre le css qui vous est particulier pas le css general qui est deja défini dans le début.php*/
-require '../debut-2.php';
+require 'debut-2.php';
 $h3='Information sur la promotion';
-require '../navbanner-secretaire.php'; 
+require 'navbanner-secretaire.php'; 
 
 ?>
 
@@ -28,7 +28,7 @@ file_put_contents('log.txt', $texte."Consulter Promotion actuelle|".$_SESSION["i
 
             <div class=contenu>
                 <?php 
-                require '../BDDsyages.php';
+                require 'BDDsyages.php';
                 if($_SESSION["role"]=="p"){
                     $bd = BDDsyages::getBddsyages(2);
                 }
@@ -159,4 +159,4 @@ file_put_contents('log.txt', $texte."Consulter Promotion actuelle|".$_SESSION["i
 
             </div>
 
-<?php  require '../fin.php' ; ?>
+<?php  require 'fin.php' ; ?>
