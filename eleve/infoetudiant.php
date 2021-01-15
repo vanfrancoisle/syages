@@ -10,9 +10,10 @@ require '../general/navbanner-eleve.php';
 <?php
 require '../general/BDDSyages-etud.php';
 $m= Bddsyages::getBddsyages(2);
-$idEtudiant=11111111;
+$idEtudiant=11111112; // MOT DE PASSE NON CRYPTE : wejdene11
 $etudiant = $m->info_etud($idEtudiant);
-
+$ancienmdp = $m->recup_ancien_mdp($idEtudiant);
+$mdptest = $ancienmdp["MotDePasse"];
 ?>
 
 <div class="body" id="body">
@@ -54,7 +55,7 @@ $etudiant = $m->info_etud($idEtudiant);
 
                 <div class="formpswd">
                   <div class="formcenter">
-         
+
 
                   <?php
 				  // var_dump($_POST["ancienmdp"]);
@@ -64,24 +65,26 @@ $etudiant = $m->info_etud($idEtudiant);
 					  $amdp = $_POST["ancienmdp"];
 					  $nmdp = $_POST["nvxmdp"];
 					  $repmdp = $_POST["repnvxmdp"];
+
 					  if($nmdp===$repmdp){
-						  echo 'les 2 mdp correspondent';
-						  // Vérifier que amdp exist dans la bdd
-						      // si oui changer mdp
-							  // si non votre mdp n'est pas correcte
-						           // creer des variable
-								   // $mdpPasbBon
-					  }else{
-						  echo 'les 2 mdp ne correspondent pas !';
+						  echo 'Mot de passe changé !';
+						  if (password_verify($amdp, $mdptest)) {
+                $changmdp = $m->changer_mdp_eleve($idEtudiant, $nmdp, $repmdp);
+              }
+              else {
+                echo "Mot de passe incorrect !";
+              }
 					  }
-					  $changmdp = $m->changer_mdp_eleve($idEtudiant, $amdp, $nmdp);
+            else{
+						  echo 'Les mots de passes ne correspondent pas !';
+					  }
+
 				}
 				echo '<form class="changmdp" action="infoetudiant.php" method="post">
 				<h2 class="mdp"> Changer mon mot de passe </h2>
 				<div class="form-group">
 				  <label for="">Mon ancien mot de passe</label></br>
 				  <input style="background-color:black" placeholder="Ancien mot de passe" type="password" name="ancienmdp" value="">
-				  /// affiche mdpPasBon
 				</div>
 				<div class="form-group">
 				  <label for="">Nouveau mot de passe</label></br>
@@ -90,7 +93,6 @@ $etudiant = $m->info_etud($idEtudiant);
 				<div class="form-group">
 				  <label for="">Repeter nouveau mot de passe</label></br>
 				  <input style="background-color:black" placeholder="Repeter mot de passe" type="text" name="repnvxmdp" value="">
-				  // affiche var les 2 mdp ne correspondent pas 
 				</div>
 				<button id="savemdp" type="submit" class="btn btn-dark">Changer</button>
 			   </form>';
