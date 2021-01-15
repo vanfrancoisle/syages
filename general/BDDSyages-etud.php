@@ -22,11 +22,11 @@ class Bddsyages{
 	private function __construct($entier){
 
 		if($entier==1){
-			$this->bd = new PDO('mysql:host=localhost;dbname=SYAGES', 'eleve',     'eleve');
+			$this->bd = new PDO('mysql:host=localhost;dbname=syages', 'root', 'root');
 		}
- 
+
 		else if($entier==2){
-		  $this->bd = new PDO('mysql:host=localhost;dbname=bddsyages', 'root', '');
+		  $this->bd = new PDO('mysql:host=localhost;dbname=syages', 'root', 'root');
 		}
 
 		else if($entier==3){
@@ -37,7 +37,7 @@ class Bddsyages{
 			$this->bd = new PDO('mysql:host=localhost;dbname=SYAGES', 'admin', 'admin');
 		}
 
-		$this->bd->query("SET NAMES 'utf8'"); 
+		$this->bd->query("SET NAMES 'utf8'");
 
 		$this->bd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	}
@@ -74,7 +74,8 @@ class Bddsyages{
 
     if ($mdp == $repmdp) {
       $pswd = password_hash($mdp, PASSWORD_DEFAULT);
-      $sql = "UPDATE User SET MotDePasse = :pswd WHERE idUser= :id'";
+      $sql = "UPDATE users SET MotDePasse = :pswd WHERE idUser= :id";
+      //$sql = "";
       $req= $this->bd->prepare($sql);
       $req->bindValue(':id', $eleve);
       $req->bindValue(':pswd', $pswd);
@@ -82,6 +83,13 @@ class Bddsyages{
     }
 
     }
+
+    public function recup_ancien_mdp($eleve){
+        $req= $this->bd->prepare("SELECT MotDePasse FROM users WHERE idUser= :id");
+        $req->bindValue(':id', $eleve);
+        $req->execute();
+        return $req-> fetch();
+      }
 
     public function recuperer_tout_controle_etud($id){
             $req= $this->bd->prepare( 'SELECT *, matiere.Nom from eval,matiere where matiere.idMatiere = eval.idMatiere AND eval.idUser= :id AND Note>=0;');
@@ -110,7 +118,7 @@ class Bddsyages{
         $req->execute();
         return $req-> fetch(PDO:: FETCH_ASSOC)["nom"];
     }
-    
+
 }
 
 ?>
